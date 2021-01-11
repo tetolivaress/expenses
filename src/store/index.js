@@ -7,18 +7,26 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    expenses: []
+    expenses: [
+      {
+        asd: 213423
+      }
+    ]
   },
   mutations: {
     ...vuexfireMutations
   },
   actions: {
-    bindExpenses: firestoreAction(async ({ bindFirestoreRef }) => {
-      // return the promise returned by `bindFirestoreRef`
+    bindExpenses: firestoreAction(({ bindFirestoreRef }) => {
+      // db.collection('expenses')
+      //   .get()
+      //   .then((doc) => {
+      //     doc.forEach((s) => {
+      //       console.log(s.data())
+      //     })
+      //   })
 
-      const ww = await bindFirestoreRef('expenses', db.collection('expenses'))
-      console.log(ww)
-      return ww
+      return bindFirestoreRef('expenses', db.collection('expenses'))
     })
   },
   modules: {

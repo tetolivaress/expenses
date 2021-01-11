@@ -8,7 +8,8 @@
 
 <script>
 import HelloWorld from './components/HelloWorld'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
+import Store from './store/index'
 
 export default {
   name: 'App',
@@ -22,6 +23,12 @@ export default {
   }),
   computed: mapState({
     ...mapState(['expenses'])
-  })
+  }),
+  methods: {
+    ...mapActions(['bindExpenses'])
+  },
+  created () {
+    Store.dispatch('bindExpenses')
+  }
 }
 </script>
