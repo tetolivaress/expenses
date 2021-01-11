@@ -1,5 +1,8 @@
 <template>
   <v-app>
+    <div v-for="(expense, i) in expenses" :key="i">
+      <span>{{ expense}}</span>
+    </div>
     <v-main>
       <HelloWorld/>
     </v-main>
