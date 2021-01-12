@@ -87,7 +87,7 @@
           <v-btn
             color="primary"
             text
-            @click="saveExpense"
+            @click="addExpense({ firstname, lastname, email })"
           >
             Add
           </v-btn>
@@ -98,16 +98,21 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   name: 'HelloWorld',
 
   data: () => ({
+    firstname: '',
+    lastname: '',
+    email: '',
     newExpense: false
   }),
   methods: {
     saveExpense () {
 
-    }
+    },
+    ...mapActions(['addExpense'])
   }
 }
 </script>

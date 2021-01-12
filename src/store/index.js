@@ -27,6 +27,10 @@ export default new Vuex.Store({
       //   })
 
       return bindFirestoreRef('expenses', db.collection('expenses'))
+    }),
+    addExpense: firestoreAction((context, payload) => {
+      // return the promise so we can await the write
+      return db.collection('expenses').add(payload)
     })
   },
   modules: {
