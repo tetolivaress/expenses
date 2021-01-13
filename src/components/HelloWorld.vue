@@ -1,16 +1,5 @@
 <template>
   <v-container>
-    <v-row class="text-center">
-      <v-col cols="12">
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        />
-      </v-col>
-
-    </v-row>
     <v-dialog
       v-model="newExpense"
       width="500"
@@ -19,16 +8,13 @@
         <v-btn
           v-bind="attrs"
           v-on="on"
-          v-show="!hidden"
-          color="pink"
-          dark
-          absolute
-          top
-          right
           fab
+          large
+          dark
+          bottom
+          color="primary"
           @click="newExpense = true"
         >
-          <v-icon>mdi-plus</v-icon>
         </v-btn>
       </template>
       <v-card>
@@ -38,18 +24,17 @@
 
         <v-divider></v-divider>
 
-        <v-form v-model="valid">
+        <v-form>
           <v-container>
             <v-row>
               <v-col
                 cols="12"
-                md="4"
+                md="8"
               >
                 <v-text-field
-                  v-model="firstname"
-                  :rules="nameRules"
+                  v-model="description"
                   :counter="10"
-                  label="First name"
+                  label="Description"
                   required
                 ></v-text-field>
               </v-col>
@@ -59,22 +44,9 @@
                 md="4"
               >
                 <v-text-field
-                  v-model="lastname"
-                  :rules="nameRules"
+                  v-model="amount"
                   :counter="10"
-                  label="Last name"
-                  required
-                ></v-text-field>
-              </v-col>
-
-              <v-col
-                cols="12"
-                md="4"
-              >
-                <v-text-field
-                  v-model="email"
-                  :rules="emailRules"
-                  label="E-mail"
+                  label="Mount"
                   required
                 ></v-text-field>
               </v-col>
@@ -87,7 +59,7 @@
           <v-btn
             color="primary"
             text
-            @click="addExpense({ firstname, lastname, email })"
+            @click="addExpense({ description, amount }), newExpense = false, description = '', amount = ''"
           >
             Add
           </v-btn>
@@ -103,9 +75,8 @@ export default {
   name: 'HelloWorld',
 
   data: () => ({
-    firstname: '',
-    lastname: '',
-    email: '',
+    description: '',
+    amount: '',
     newExpense: false
   }),
   methods: {
@@ -116,3 +87,9 @@ export default {
   }
 }
 </script>
+<style lang="sass" scoped>
+  .bottom
+    bottom: 3vw
+    right: 3vw
+    position: fixed
+</style>

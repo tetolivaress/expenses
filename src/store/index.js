@@ -9,7 +9,7 @@ export default new Vuex.Store({
   state: {
     expenses: [
       {
-        asd: 213423
+        description: 213423
       }
     ]
   },
@@ -18,19 +18,16 @@ export default new Vuex.Store({
   },
   actions: {
     bindExpenses: firestoreAction(({ bindFirestoreRef }) => {
-      // db.collection('expenses')
-      //   .get()
-      //   .then((doc) => {
-      //     doc.forEach((s) => {
-      //       console.log(s.data())
-      //     })
-      //   })
-
       return bindFirestoreRef('expenses', db.collection('expenses'))
     }),
     addExpense: firestoreAction((context, payload) => {
       // return the promise so we can await the write
       return db.collection('expenses').add(payload)
+    }),
+    removeExpense: firestoreAction((context, expense) => {
+      db.collection('expenses')
+        .doc(expense.id)
+        .delete()
     })
   },
   modules: {
