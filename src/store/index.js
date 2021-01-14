@@ -24,7 +24,7 @@ export default new Vuex.Store({
         ? state.expenses
           .map(expense => Number(expense.amount))
           .reduce((acc, current) => acc + current)
-        : 0
+        : 'Aún no tienes nada Registrado'
     }
   },
   mutations: {
@@ -42,6 +42,15 @@ export default new Vuex.Store({
       db.collection('expenses')
         .doc(expense.id)
         .delete()
+    }),
+    updateExpense: firestoreAction((context, expense) => {
+      console.log(expense)
+      db.collection('expenses')
+        .doc(expense.id)
+        .update({ description: expense.description, amount: expense.amount })
+        .then(() => {
+          console.log('expense updated!')
+        })
     })
   },
   modules: {
