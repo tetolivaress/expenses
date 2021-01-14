@@ -2,7 +2,6 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import firebaseConfig from '../../firebaseConfig.json'
 
-
 // firebase
 //   .initializeApp(firebaseConfig)
 //   .firestore()

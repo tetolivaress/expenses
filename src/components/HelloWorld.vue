@@ -13,8 +13,8 @@
           dark
           bottom
           color="primary"
-          @click="newExpense = true"
         >
+          <v-icon>mdi-plus</v-icon>
         </v-btn>
       </template>
       <v-card>

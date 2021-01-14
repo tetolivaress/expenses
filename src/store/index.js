@@ -9,9 +9,23 @@ export default new Vuex.Store({
   state: {
     expenses: [
       {
-        description: 213423
+        description: '',
+        amount: 0
+      },
+      {
+        description: '',
+        amount: 5
       }
     ]
+  },
+  getters: {
+    spent: state => {
+      return state.expenses.length
+        ? state.expenses
+          .map(expense => Number(expense.amount))
+          .reduce((acc, current) => acc + current)
+        : 0
+    }
   },
   mutations: {
     ...vuexfireMutations

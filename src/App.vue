@@ -13,7 +13,7 @@
             subheader
             two-line
           >
-            <v-subheader inset>Folders</v-subheader>
+            <v-subheader inset>{{ spent }}</v-subheader>
 
             <v-list-item
               v-for="(expense, i) in expenses"
@@ -36,7 +36,7 @@
 
               <v-list-item-action @click="removeExpense(expense)">
                 <v-btn icon>
-                  <v-icon color="grey lighten-1">mdi-information</v-icon>
+                  <v-icon color="red lighten-1">mdi-close</v-icon>
                 </v-btn>
               </v-list-item-action>
             </v-list-item>
@@ -52,7 +52,7 @@
 
 <script>
 import HelloWorld from './components/HelloWorld'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import Store from './store/index'
 
 export default {
@@ -66,7 +66,8 @@ export default {
     //
   }),
   computed: mapState({
-    ...mapState(['expenses'])
+    ...mapState(['expenses']),
+    ...mapGetters(['spent'])
   }),
   methods: {
     ...mapActions(['removeExpense'])
