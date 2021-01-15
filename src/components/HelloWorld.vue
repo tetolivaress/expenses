@@ -19,7 +19,7 @@
       </template>
       <v-card>
         <v-card-title class="headline grey lighten-2">
-          Privacy Policy
+          Privacy Policy {{ user }}
         </v-card-title>
 
         <v-divider></v-divider>
@@ -59,7 +59,7 @@
           <v-btn
             color="primary"
             text
-            @click="addExpense({ description, amount }), newExpense = false, description = '', amount = ''"
+            @click="addExpense({ description, amount, userId: user.user.id }), newExpense = false, description = '', amount = ''"
           >
             Add
           </v-btn>
@@ -70,7 +70,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'HelloWorld',
 
@@ -79,6 +79,9 @@ export default {
     amount: '',
     newExpense: false
   }),
+  computed: {
+    ...mapState(['user'])
+  },
   methods: {
     saveExpense () {
 

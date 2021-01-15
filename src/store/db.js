@@ -1,17 +1,6 @@
 import firebase from 'firebase/app'
-import 'firebase/firestore'
 import firebaseConfig from '../../firebaseConfig.json'
-
-// firebase
-//   .initializeApp(firebaseConfig)
-//   .firestore()
-//   .collection('expenses')
-//   .get()
-//   .then((doc) => {
-//     doc.forEach((s) => {
-//       console.log(s.data())
-//     })
-//   })
+import 'firebase/firestore'
 
 export const db = firebase
   .initializeApp(firebaseConfig)

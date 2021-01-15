@@ -2,10 +2,14 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
 import { db } from './db'
+import user from './user'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  modules: {
+    user
+  },
   state: {
     expenses: [
       {
@@ -32,7 +36,7 @@ export default new Vuex.Store({
   },
   actions: {
     bindExpenses: firestoreAction(({ bindFirestoreRef }) => {
-      return bindFirestoreRef('expenses', db.collection('expenses'))
+      return bindFirestoreRef('expenses', db.collection('expenses').where('userId', '==', 'pKcJoIiy0eUHuapcUbDbaJL1dPH3'))
     }),
     addExpense: firestoreAction((context, payload) => {
       // return the promise so we can await the write
@@ -52,7 +56,5 @@ export default new Vuex.Store({
           console.log('expense updated!')
         })
     })
-  },
-  modules: {
   }
 })
