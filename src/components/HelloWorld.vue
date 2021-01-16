@@ -59,7 +59,7 @@
           <v-btn
             color="primary"
             text
-            @click="addExpense({ description, amount, userId: user.user.id }), newExpense = false, description = '', amount = ''"
+            @click="addExpense({ description: description, amount: amount, userId: user.user.id }), newExpense = false, description = '', amount = ''"
           >
             Add
           </v-btn>

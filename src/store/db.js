@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
 import firebaseConfig from '../../firebaseConfig.json'
 import 'firebase/firestore'
+import 'firebase/auth'
 
 export const db = firebase
   .initializeApp(firebaseConfig)

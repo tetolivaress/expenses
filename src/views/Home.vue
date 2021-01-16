@@ -7,6 +7,7 @@
 
 <script>
 
+import Store from '../store'
 import ExpenseList from '@/components/ExpenseList.vue'
 import HelloWorld from '../components/HelloWorld'
 
@@ -15,6 +16,9 @@ export default {
   components: {
     ExpenseList,
     HelloWorld
+  },
+  created () {
+    Store.dispatch('bindExpenses')
   }
 }
 </script>

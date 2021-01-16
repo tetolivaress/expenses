@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
 import { db } from './db'
 import user from './user'
+import firebase from 'firebase/app'
+import 'firebase/auth'
 
 Vue.use(Vuex)
 
@@ -36,7 +38,9 @@ export default new Vuex.Store({
   },
   actions: {
     bindExpenses: firestoreAction(({ bindFirestoreRef }) => {
-      return bindFirestoreRef('expenses', db.collection('expenses').where('userId', '==', 'pKcJoIiy0eUHuapcUbDbaJL1dPH3'))
+      const user = firebase.auth().currentUser
+      console.log(user)
+      return bindFirestoreRef('expenses', db.collection('expenses').where('userId', '==', user.uid))
     }),
     addExpense: firestoreAction((context, payload) => {
       // return the promise so we can await the write

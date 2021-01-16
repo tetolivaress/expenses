@@ -67,7 +67,6 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
-import Store from './store/index'
 
 export default {
   name: 'App',
@@ -84,9 +83,6 @@ export default {
   }),
   methods: {
     ...mapActions(['removeExpense', 'updateExpense'])
-  },
-  created () {
-    Store.dispatch('bindExpenses')
   }
 }
 </script>
