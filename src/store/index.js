@@ -15,16 +15,8 @@ export default new Vuex.Store({
   },
   plugins: [createPersistedState()],
   state: {
-    expenses: [
-      {
-        description: '',
-        amount: 0
-      },
-      {
-        description: '',
-        amount: 5
-      }
-    ]
+    expenses: [],
+    isLoading: false
   },
   getters: {
     spent: state => {
@@ -36,16 +28,26 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    setLoading (state, payload) {
+      state.isLoading = payload
+    },
     ...vuexfireMutations
   },
   actions: {
-    bindExpenses: firestoreAction(({ bindFirestoreRef }) => {
-      const user = firebase.auth().currentUser
-      console.log(user)
-      return bindFirestoreRef('expenses', db.collection('expenses').where('userId', '==', user.uid))
+    bindExpenses: firestoreAction(async ({ bindFirestoreRef, commit }) => {
+      try {
+        commit('setLoading', true)
+        const { uid } = await firebase.auth().currentUser
+        console.log(db.collection('expenses').where('userId', '==', uid))
+        const expenses = await db.collection('expenses').where('userId', '==', uid)
+        return bindFirestoreRef('expenses', expenses)
+      } catch (error) {
+        console.log(error)
+      } finally {
+        commit('setLoading', false)
+      }
     }),
     addExpense: firestoreAction((context, payload) => {
-      // return the promise so we can await the write
       return db.collection('expenses').add(payload)
     }),
     removeExpense: firestoreAction((context, expense) => {
