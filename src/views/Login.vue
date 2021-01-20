@@ -37,7 +37,7 @@
       :disabled="!valid"
       color="red"
       class="mr-4"
-      @click="signUserIn({email, password})"
+      @click="logout"
     >
       LogOut
     </v-btn>

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
 import { db } from './db'
 import user from './user'
+import createPersistedState from 'vuex-persistedstate'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
   modules: {
     user
   },
+  plugins: [createPersistedState()],
   state: {
     expenses: [
       {
