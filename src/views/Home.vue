@@ -1,24 +1,19 @@
 <template>
   <div class="home">
     <ExpenseList/>
-    <HelloWorld/>
+    <AddExpense/>
   </div>
 </template>
 
 <script>
-
-import Store from '../store'
 import ExpenseList from '@/components/ExpenseList.vue'
-import HelloWorld from '../components/HelloWorld'
+import AddExpense from '@/components/AddExpense.vue'
 
 export default {
   name: 'Home',
   components: {
     ExpenseList,
-    HelloWorld
-  },
-  created () {
-    Store.dispatch('bindExpenses')
+    AddExpense
   }
 }
 </script>
