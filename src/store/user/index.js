@@ -1,6 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import router from '../../router'
+import router from '@/router'
 
 export default {
   state: {
@@ -63,9 +63,28 @@ export default {
           }
         )
     },
+    signInWithGoogle ({ commit }) {
+      const provider = new firebase.auth.GoogleAuthProvider()
+      firebase.auth().signInWithPopup(provider)
+        .then(
+          ({ user }) => {
+            console.log(user)
+            const newUser = {
+              id: user.uid,
+              name: user.displayName,
+              email: user.email,
+              photoUrl: user.photoURL
+            }
+            commit('setUser', newUser)
+            router.push({ path: '/' })
+          })
+        .catch(error => console.log(error))
+    },
     logout ({ commit }) {
+      commit('setLoeading', true)
       firebase.auth().signOut()
       commit('setUser', null)
+      // router.push({ path: '/login' })
     }
   },
   getters: {

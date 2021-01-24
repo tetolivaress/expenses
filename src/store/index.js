@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
-import { db } from './db'
-import user from './user'
+import { db } from '@/store/db'
+import user from '@/store/user'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
@@ -42,7 +42,7 @@ export default new Vuex.Store({
       } catch (error) {
         console.log(error)
       } finally {
-        commit('setLoading', false)
+        // commit('setLoading', false)
       }
     }),
     addExpense: firestoreAction((context, payload) => {

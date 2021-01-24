@@ -94,7 +94,6 @@
   </v-container>
 </template>
 <script>
-import Store from '../store'
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -114,7 +113,9 @@ export default {
     ...mapActions(['removeExpense', 'updateExpense'])
   },
   created () {
-    Store.dispatch('bindExpenses')
+    this.$store.commit('setLoading', true)
+    this.$store.dispatch('bindExpenses')
+      .then(() => this.$store.commit('setLoading', false))
   }
 }
 </script>
