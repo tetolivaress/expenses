@@ -1,17 +1,20 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
-import { db } from './db'
-import user from './user'
-import createPersistedState from 'vuex-persistedstate'
+import { db } from '@/store/db'
+import user from '@/store/user'
+import category from '@/store/category'
 import firebase from 'firebase/app'
 import 'firebase/auth'
+
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    user
+    user,
+    category
   },
   plugins: [createPersistedState()],
   state: {
@@ -38,13 +41,12 @@ export default new Vuex.Store({
       try {
         commit('setLoading', true)
         const { uid } = await firebase.auth().currentUser
-        console.log(db.collection('expenses').where('userId', '==', uid))
         const expenses = await db.collection('expenses').where('userId', '==', uid)
         return bindFirestoreRef('expenses', expenses)
       } catch (error) {
         console.log(error)
       } finally {
-        commit('setLoading', false)
+        // commit('setLoading', false)
       }
     }),
     addExpense: firestoreAction((context, payload) => {

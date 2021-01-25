@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import NavBar from './components/NavBar'
+import NavBar from '@/components/NavBar'
 import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {

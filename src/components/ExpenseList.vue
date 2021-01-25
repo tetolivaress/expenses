@@ -1,6 +1,9 @@
 <template>
   <v-container>
     <v-row>
+      {{ spent }}
+    </v-row>
+    <v-row>
       <v-col
         cols="12"
         md="8"
@@ -25,8 +28,8 @@
 
             <v-list-item-content @click="selectedExpense = expense, openModal = true">
               <v-list-item-title v-text="expense.description"></v-list-item-title>
-
               <v-list-item-subtitle v-text="expense.amount"></v-list-item-subtitle>
+              <v-list-item-subtitle v-text="expense.date"></v-list-item-subtitle>
             </v-list-item-content>
 
             <v-list-item-action>
@@ -94,8 +97,7 @@
   </v-container>
 </template>
 <script>
-import Store from '../store'
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -108,13 +110,16 @@ export default {
     }
   },
   computed: {
-    ...mapState(['expenses'])
+    ...mapState(['expenses']),
+    ...mapGetters(['spent'])
   },
   methods: {
     ...mapActions(['removeExpense', 'updateExpense'])
   },
   created () {
-    Store.dispatch('bindExpenses')
+    this.$store.commit('setLoading', true)
+    this.$store.dispatch('bindExpenses')
+      .then(() => this.$store.commit('setLoading', false))
   }
 }
 </script>

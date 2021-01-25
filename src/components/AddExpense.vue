@@ -18,7 +18,7 @@
     </template>
     <v-card>
       <v-card-title class="headline grey lighten-2">
-        Add Expense
+        Add Expense <v-date-picker v-model="picker"></v-date-picker>
       </v-card-title>
 
       <v-divider></v-divider>
@@ -58,7 +58,7 @@
         <v-btn
           color="primary"
           text
-          @click="addExpense({ description: description, amount: amount, userId: user.user.id }), newExpense = false, description = '', amount = ''"
+          @click="addExpense({ description, amount, userId: user.user.id, date: picker }), newExpense = false, description = '', amount = ''"
         >
           Add
         </v-btn>
@@ -72,6 +72,7 @@ export default {
   name: 'HelloWorld',
 
   data: () => ({
+    picker: new Date().toISOString().substr(0, 10),
     description: '',
     amount: '',
     newExpense: false
