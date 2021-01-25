@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import { vuexfireMutations, firestoreAction } from 'vuexfire'
 import { db } from '@/store/db'
 import user from '@/store/user'
+import category from '@/store/category'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
@@ -10,7 +11,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    user
+    user,
+    category
   },
   state: {
     expenses: [],
@@ -36,7 +38,6 @@ export default new Vuex.Store({
       try {
         commit('setLoading', true)
         const { uid } = await firebase.auth().currentUser
-        console.log(db.collection('expenses').where('userId', '==', uid))
         const expenses = await db.collection('expenses').where('userId', '==', uid)
         return bindFirestoreRef('expenses', expenses)
       } catch (error) {
