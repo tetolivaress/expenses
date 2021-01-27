@@ -1,7 +1,7 @@
 <template>
   <v-app-bar
     absolute
-    color="white"
+    color="blue lighten-5"
     elevate-on-scroll
   >
     <v-app-bar-nav-icon></v-app-bar-nav-icon>
