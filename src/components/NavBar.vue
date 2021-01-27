@@ -1,6 +1,5 @@
 <template>
   <v-app-bar
-    absolute
     color="blue lighten-5"
     elevate-on-scroll
   >

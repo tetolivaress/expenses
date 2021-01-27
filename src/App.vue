@@ -2,10 +2,6 @@
   <v-app>
     <div id="app">
       <NavBar/>
-      <br>
-      <br>
-      <br>
-      <br>
       <router-view/>
     </div>
     <v-overlay
