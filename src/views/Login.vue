@@ -1,5 +1,5 @@
-<template>
-  <LoginForm/>
+<template lang="pug">
+  LoginForm
 </template>
 <script>
 import LoginForm from '@/components/LoginForm'

@@ -1,5 +1,5 @@
-<template>
-  <SignUpForm/>
+<template lang="pug">
+  SignUpForm
 </template>
 <script>
 import SignUpForm from '@/components/SignUpForm'

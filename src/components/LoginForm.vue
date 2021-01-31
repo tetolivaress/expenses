@@ -1,54 +1,21 @@
-<template>
-  <v-container>
-    <v-row justify="center">
-      <v-col cols="10" md="6">
-        <v-form
-          ref="form"
-          v-model="valid"
-          lazy-validation
-        >
-          <br>
-          <br>
-          <br>
-          <v-text-field
-            v-model="email"
-            :rules="emailRules"
-            label="E-mail"
-            required
-          ></v-text-field>
-
-          <v-text-field
-            v-model="password"
-            label="Password"
-            required
-          ></v-text-field>
-        </v-form>
-      </v-col>
-    </v-row>
-    <v-row justify="center">
-      <v-btn
-        :disabled="!valid"
-        color="success"
-        class="mr-4"
-        @click="signUserIn({email, password})"
-      >
-        SignIn
-      </v-btn>
-      <router-link to="/signup">
-        <v-btn
-          color="red"
-        >
-          SignUp
-        </v-btn>
-      </router-link>
-      <v-btn
-        class="mt-4"
-        @click="signInWithGoogle"
-      >
-        signInWithGoogle
-      </v-btn>
-    </v-row>
-  </v-container>
+<template lang="pug">
+  v-container
+    v-row(justify='center')
+      v-col(cols='10' md='6')
+        v-form(ref='form' v-model='valid' lazy-validation='')
+          br
+          br
+          br
+          v-text-field(v-model='email' :rules='emailRules' label='E-mail' required='')
+          v-text-field(v-model='password' label='Password' required='')
+    v-row(justify='center')
+      v-btn.mr-4(:disabled='!valid' color='success' @click='signUserIn({email, password})')
+        | SignIn
+      router-link(to='/signup')
+        v-btn(color='red')
+          | SignUp
+      v-btn.mt-4(@click='signInWithGoogle')
+        | signInWithGoogle
 </template>
 
 <script>

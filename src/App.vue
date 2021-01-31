@@ -1,19 +1,16 @@
-<template>
-  <v-app>
-    <div id="app">
-      <NavBar/>
-      <router-view/>
-    </div>
-    <v-overlay
+<template lang="pug">
+  v-app
+    #app
+      NavBar
+      router-view
+    v-overlay(
       :absolute="true"
       :value="isLoading"
-    >
-      <v-progress-circular
+    )
+      v-progress-circular(
         indeterminate
         color="red"
-      ></v-progress-circular>
-    </v-overlay>
-  </v-app>
+      )
 </template>
 
 <script>

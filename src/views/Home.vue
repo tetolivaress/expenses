@@ -1,8 +1,7 @@
-<template>
-  <div class="home">
-    <ExpenseList/>
-    <AddExpense/>
-  </div>
+<template lang="pug">
+  div.home
+    ExpenseList
+    AddExpense
 </template>
 
 <script>
