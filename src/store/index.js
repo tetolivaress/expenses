@@ -45,8 +45,6 @@ export default new Vuex.Store({
         return bindFirestoreRef('expenses', expenses)
       } catch (error) {
         console.log(error)
-      } finally {
-        // commit('setLoading', false)
       }
     }),
     addExpense: firestoreAction((context, payload) => {

@@ -20,15 +20,21 @@
     </template>
     <v-card>
       <v-card-title class="headline grey lighten-2">
-        Add Expense <v-date-picker v-model="picker"></v-date-picker>
+        <v-date-picker v-model="picker" v-if="openDatePicker" @input="openDatePicker = !openDatePicker, date = $event"></v-date-picker>
+        <div v-else @click="openDatePicker = !openDatePicker">{{ date ? date : 'Change Date' }}</div>
       </v-card-title>
 
       <v-divider></v-divider>
 
-      <v-form>
+      <v-form v-show="!openDatePicker">
         <v-container>
+          <v-text-field
+            v-model="searchCategory"
+            label="Search Category"
+            solo
+          ></v-text-field>
           <v-select
-            :items="['Foo', 'Bar', 'Fizz', 'Buzz']"
+            :items="filteredCategories"
             label="Solo field"
             solo
           ></v-select>
@@ -42,6 +48,7 @@
                 :counter="10"
                 label="Description"
                 required
+                solo
               ></v-text-field>
             </v-col>
 
@@ -54,6 +61,7 @@
                 :counter="10"
                 label="Mount"
                 required
+                solo
               ></v-text-field>
             </v-col>
           </v-row>
@@ -76,16 +84,25 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 export default {
-  name: 'HelloWorld',
+  name: 'AddExpense',
 
   data: () => ({
+    searchCategory: '',
+    date: new Date(),
+    openDatePicker: false,
     picker: new Date().toISOString().substr(0, 10),
     description: '',
     amount: '',
     newExpense: false
   }),
   computed: {
-    ...mapState(['user'])
+    ...mapState(['user', 'category']),
+    filteredCategories () {
+      return this.category.categories.filter(
+        (category) =>
+          category.name.toLowerCase().indexOf(this.searchCategory.toLowerCase()) > -1
+      )
+    }
   },
   methods: {
     ...mapActions(['addExpense'])

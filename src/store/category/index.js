@@ -4,7 +4,6 @@ import { vuexfireMutations, firestoreAction } from 'vuexfire'
 import { db } from '@/store/db'
 
 export default {
-  namespaced: true,
   state: {
     categories: null
   },
