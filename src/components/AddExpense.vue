@@ -25,6 +25,11 @@
 
       <v-form>
         <v-container>
+          <v-select
+            :items="['Foo', 'Bar', 'Fizz', 'Buzz']"
+            label="Solo field"
+            solo
+          ></v-select>
           <v-row>
             <v-col
               cols="12"
