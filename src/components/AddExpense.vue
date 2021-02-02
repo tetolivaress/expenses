@@ -11,6 +11,8 @@
         large
         dark
         bottom
+        right
+        fixed
         color="primary"
       >
         <v-icon>mdi-plus</v-icon>

@@ -7,6 +7,8 @@ import category from '@/store/category'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
+import createPersistedState from 'vuex-persistedstate'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -14,6 +16,7 @@ export default new Vuex.Store({
     user,
     category
   },
+  plugins: [createPersistedState()],
   state: {
     expenses: [],
     isLoading: false
