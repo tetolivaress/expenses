@@ -21,23 +21,48 @@
     <v-card>
       <v-card-title class="headline grey lighten-2">
         <v-date-picker v-model="picker" v-if="openDatePicker" @input="openDatePicker = !openDatePicker, date = $event"></v-date-picker>
-        <div v-else @click="openDatePicker = !openDatePicker">{{ date ? date : 'Change Date' }}</div>
+        <div v-else @click="openDatePicker = !openDatePicker">
+          {{ date ? date : 'Change Date' }}
+          {{filteredCategories.length}}</div>
       </v-card-title>
 
       <v-divider></v-divider>
 
       <v-form v-show="!openDatePicker">
         <v-container>
-          <v-text-field
-            v-model="searchCategory"
-            label="Search Category"
-            solo
-          ></v-text-field>
-          <v-select
+          <v-autocomplete
+            :hint="`${filteredCategories.name}, ${filteredCategories.id}`"
             :items="filteredCategories"
+            item-text="name"
+            item-value="id"
             label="Solo field"
             solo
-          ></v-select>
+            @update:search-input="searchCategory = $event ? $event : ''"
+          >
+            <template v-slot:append-outer>
+              <v-slide-x-reverse-transition
+                mode="out-in"
+              >
+                <v-icon v-if="filteredCategories.length > 1">
+                  mdi-circle-edit-outline
+                </v-icon>
+                <v-icon
+                  v-else-if="filteredCategories.length == 1"
+                  color="red"
+                >
+                  mdi-wrench
+                </v-icon>
+                <v-icon
+                  @click="addCategory(searchCategory)"
+                  v-else
+                  color="primary"
+                >
+                  mdi-cloud-upload
+                </v-icon>
+              </v-slide-x-reverse-transition>
+            </template>
+          </v-autocomplete>
+          {{filteredCategories.length}}
           <v-row>
             <v-col
               cols="12"
@@ -105,7 +130,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['addExpense'])
+    ...mapActions(['addExpense', 'addCategory'])
   }
 }
 </script>

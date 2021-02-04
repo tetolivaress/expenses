@@ -24,7 +24,11 @@ export default {
       return bindFirestoreRef('categories', categories)
     }),
     addCategory: firestoreAction((context, payload) => {
-      return db.collection('categories').add(payload)
+      console.log(context.state)
+      return db.collection('categories').add({
+        name: payload,
+        userId: context.state.user.id
+      })
     }),
     removeCategory: firestoreAction((context, category) => {
       db.collection('categories')

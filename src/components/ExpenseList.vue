@@ -118,6 +118,7 @@ export default {
   },
   created () {
     this.$store.commit('setLoading', true)
+    this.$store.dispatch('bindCategories')
     this.$store.dispatch('bindExpenses')
       .then(() => this.$store.commit('setLoading', false))
   }
