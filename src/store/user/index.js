@@ -3,20 +3,18 @@ import 'firebase/auth'
 import router from '@/router'
 
 export default {
+  namespaced: true,
   state: {
     user: null
   },
   mutations: {
     setUser (state, payload) {
       state.user = payload
-    },
-    setLoading (state, payload) {
-      state.isLoading = payload
     }
   },
   actions: {
     signUserUp ({ commit }, payload) {
-      commit('setLoading', true)
+      commit('SHOW_LOADING')
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
         .then(
           ({ user }) => {
@@ -27,20 +25,20 @@ export default {
               photoUrl: user.photoURL
             }
             commit('setUser', newUser)
-            commit('setLoading', false)
+            commit('HIDE_LOADING')
             router.push({ path: '/' })
           }
         )
         .catch(
           error => {
-            commit('setLoading', false)
+            commit('HIDE_LOADING')
             // commit('setError', error)
             console.log(error)
           }
         )
     },
     signUserIn ({ commit }, payload) {
-      commit('setLoading', true)
+      commit('SHOW_LOADING')
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
         .then(
           ({ user }) => {
@@ -81,7 +79,7 @@ export default {
         .catch(error => console.log(error))
     },
     logout ({ commit }) {
-      commit('setLoeading', true)
+      commit('SHOW_LOADING')
       firebase.auth().signOut()
       commit('setUser', null)
       // router.push({ path: '/login' })

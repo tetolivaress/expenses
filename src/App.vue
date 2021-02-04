@@ -6,7 +6,7 @@
     </div>
     <v-overlay
       :absolute="true"
-      :value="isLoading"
+      :value="loading.isLoading"
     >
       <v-progress-circular
         indeterminate
@@ -32,7 +32,7 @@ export default {
     selectedExpense: 0
   }),
   computed: mapState({
-    ...mapState(['expenses', 'isLoading']),
+    ...mapState(['expenses', 'loading']),
     ...mapGetters(['spent'])
   }),
   methods: {

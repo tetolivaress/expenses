@@ -14,7 +14,7 @@
           two-line
         >
           <v-list-item
-            v-for="(expense, i) in expenses"
+            v-for="(expense, i) in expense.expenses"
             :key="i"
           >
             <v-list-item-avatar @click="selectedExpense = expense, openModal = true">
@@ -110,17 +110,17 @@ export default {
     }
   },
   computed: {
-    ...mapState(['expenses']),
+    ...mapState(['expense']),
     ...mapGetters(['spent'])
   },
   methods: {
     ...mapActions(['removeExpense', 'updateExpense'])
   },
   created () {
-    this.$store.commit('setLoading', true)
-    this.$store.dispatch('bindCategories')
-    this.$store.dispatch('bindExpenses')
-      .then(() => this.$store.commit('setLoading', false))
+    this.$store.commit('loading/SHOW_LOADING')
+    this.$store.dispatch('category/bindCategories')
+    this.$store.dispatch('expese/bindExpenses')
+      .then(() => this.$store.commit('loading/HIDE_LOADING'))
   }
 }
 </script>

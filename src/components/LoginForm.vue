@@ -78,7 +78,7 @@ export default {
     resetValidation () {
       this.$refs.form.resetValidation()
     },
-    ...mapActions(['signUserIn', 'signInWithGoogle'])
+    ...mapActions(['user/signUserIn', 'user/signInWithGoogle'])
   }
 }
 </script>
