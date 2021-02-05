@@ -4,11 +4,8 @@ export default {
     isLoading: false
   },
   mutations: {
-    SHOW_LOADING (state) {
-      state.loading.isLoading = true
-    },
-    HIDE_LOADING (state) {
-      state.loading.isLoading = false
+    SET_LOADING (state, payload) {
+      state.isLoading = payload
     }
   }
 }

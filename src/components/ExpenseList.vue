@@ -1,9 +1,6 @@
 <template>
   <v-container>
     <v-row>
-      {{ spent }}
-    </v-row>
-    <v-row>
       <v-col
         cols="12"
         md="8"
@@ -97,7 +94,7 @@
   </v-container>
 </template>
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
   data () {
@@ -110,17 +107,16 @@ export default {
     }
   },
   computed: {
-    ...mapState(['expense']),
-    ...mapGetters(['spent'])
+    ...mapState(['expense'])
   },
   methods: {
-    ...mapActions(['removeExpense', 'updateExpense'])
+    ...mapActions('expense', ['removeExpense', 'updateExpense'])
   },
-  created () {
-    this.$store.commit('loading/SHOW_LOADING')
-    this.$store.dispatch('category/bindCategories')
-    this.$store.dispatch('expese/bindExpenses')
-      .then(() => this.$store.commit('loading/HIDE_LOADING'))
+  async created () {
+    this.$store.commit('loading/SET_LOADING', true, { root: true })
+    await this.$store.dispatch('category/bindCategories')
+    await this.$store.dispatch('expense/bindExpenses')
+    this.$store.commit('loading/SET_LOADING', false, { root: true })
   }
 }
 </script>

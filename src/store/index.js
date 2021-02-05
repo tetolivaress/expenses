@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import user from '@/store/user'
+import { vuexfireMutations } from 'vuexfire'
 import category from '@/store/category'
 import expense from '@/store/expense'
 import loading from '@/store/loading'
@@ -16,6 +17,9 @@ export default new Vuex.Store({
     category,
     expense,
     loading
+  },
+  mutations: {
+    ...vuexfireMutations
   },
   plugins: [createPersistedState()]
 })

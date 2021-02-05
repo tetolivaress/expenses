@@ -1,6 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import { vuexfireMutations, firestoreAction } from 'vuexfire'
+import { firestoreAction } from 'vuexfire'
 import { db } from '@/store/db'
 
 export default {
@@ -17,21 +17,18 @@ export default {
         : 'Aún no tienes nada Registrado'
     }
   },
-  mutations: {
-    ...vuexfireMutations
-  },
   actions: {
     bindExpenses: firestoreAction(async ({ bindFirestoreRef, commit }) => {
       try {
-        commit('loading/SHOW_LOADING')
         const { uid } = firebase.auth().currentUser
         const expenses = db.collection('expenses').where('userId', '==', uid)
-        return bindFirestoreRef('expense/expenses', expenses)
+        return bindFirestoreRef('expenses', expenses)
       } catch (error) {
         console.log(error)
       }
     }),
-    addExpense: firestoreAction((context, payload) => {
+    addExpense: firestoreAction(({ commit }, payload) => {
+      commit('loading/SET_LOADING', true, { root: true })
       return db.collection('expenses').add(payload)
     }),
     removeExpense: firestoreAction((context, expense) => {

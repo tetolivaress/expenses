@@ -38,11 +38,11 @@ export default {
         )
     },
     signUserIn ({ commit }, payload) {
-      commit('SHOW_LOADING')
+      // commit('SHOW_LOADING')
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
         .then(
           ({ user }) => {
-            console.log(user)
+            // console.log(user)
             const newUser = {
               id: user.uid,
               name: user.displayName,
@@ -62,11 +62,12 @@ export default {
         )
     },
     signInWithGoogle ({ commit }) {
+      commit('loading/SET_LOADING', true, { root: true })
       const provider = new firebase.auth.GoogleAuthProvider()
       firebase.auth().signInWithPopup(provider)
         .then(
           ({ user }) => {
-            console.log(user)
+            // console.log(user)
             const newUser = {
               id: user.uid,
               name: user.displayName,

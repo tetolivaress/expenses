@@ -53,7 +53,6 @@
                   mdi-wrench
                 </v-icon>
                 <v-icon
-                  @click="addCategory(searchCategory)"
                   v-else
                   color="primary"
                 >
@@ -98,7 +97,7 @@
         <v-btn
           color="primary"
           text
-          @click="addExpense({ description, amount, userId: user.user.id, date: picker }), newExpense = false, description = '', amount = ''"
+          @click="addExpense({ description, amount, userId: user.id, date: picker }), newExpense = false, description = '', amount = ''"
         >
           Add
         </v-btn>
@@ -121,16 +120,23 @@ export default {
     newExpense: false
   }),
   computed: {
-    ...mapState(['user', 'category']),
+    ...mapState({
+      user: ({ user }) => user.user,
+      categories: ({ category }) => category.categories
+    }),
     filteredCategories () {
-      return this.category.categories.filter(
+      return this.categories.filter(
         (category) =>
           category.name.toLowerCase().indexOf(this.searchCategory.toLowerCase()) > -1
       )
     }
   },
   methods: {
-    ...mapActions(['addExpense', 'addCategory'])
+    ...mapActions(['expense/addExpense']),
+    async addExpense (expense) {
+      await this['expense/addExpense'](expense)
+      this.$store.commit('loading/SET_LOADING', false, { root: true })
+    }
   }
 }
 </script>
