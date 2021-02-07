@@ -26,7 +26,7 @@
           @input="openDatePicker = !openDatePicker, date = $event"
         ></v-date-picker>
         <div v-else @click="openDatePicker = !openDatePicker">
-          {{ date ? date : moment().format('DD - MMMM') }}
+          {{ date ? moment(date).format('DD - MMMM') : moment().format('DD - MMMM') }}
         </div>
         <v-icon
           color="green"
@@ -135,8 +135,8 @@ export default {
       await this['expense/addExpense'](expense)
       this.$store.commit('loading/SET_LOADING', false, { root: true })
     },
-    moment () {
-      return moment()
+    moment (date) {
+      return date ? moment(date) : moment()
     }
   }
 }
