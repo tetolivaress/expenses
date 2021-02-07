@@ -20,7 +20,14 @@
             prepend-icon="mdi-account-circle"
           >
             <template v-slot:activator>
-              <v-list-item-title>Sin Categoria - {{ spentCategory(withoutCategory) }}</v-list-item-title>
+              <v-list-item-title>
+                <v-badge
+                  color="red"
+                  :content="withoutCategory.length"
+                >
+                  Sin Categoria - {{ spentCategory(withoutCategory) }}
+                </v-badge>
+              </v-list-item-title>
             </template>
             <template v-if="withoutCategory.length">
               <v-list-item
@@ -56,11 +63,24 @@
             :key="i"
           >
             <template v-slot:activator>
-              <v-list-item-title>{{ category.category }} - {{ spentCategory(category.expenses) }}</v-list-item-title>
+              <v-list-item-title>
+                <v-badge
+                  color="red"
+                  :content="category.expenses.length"
+                  v-if="category.expenses.length"
+                >
+                  {{ category.category }} - {{ spentCategory(category.expenses) || 0 }}
+                </v-badge>
+                <div v-else>
+                  {{ category.category }}
+                </div>
+              </v-list-item-title>
             </template>
-            <template>
+            <template
+              v-for="(expense, j) in category.expenses"
+            >
               <v-list-item
-                v-for="(expense, j) in category.expenses"
+                v-if="category.expenses.length"
                 :key="j"
               >
                 <v-list-item-avatar @click="selectedExpense = expense, openModal = true">
