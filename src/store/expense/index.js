@@ -9,12 +9,20 @@ export default {
     expenses: []
   },
   getters: {
-    spent: state => {
-      return state.expenses.length
-        ? state.expenses
+    spent: ({ expenses }) => {
+      return expenses.length
+        ? expenses
           .map(expense => Number(expense.amount))
           .reduce((acc, current) => acc + current)
         : 'Aún no tienes nada Registrado'
+    },
+    sortedExpenses: ({ expenses }, { spent }, rootState) => {
+      return rootState.category.categories.map(category => {
+        return {
+          expenses: expenses.filter(expense => category.id === expense.categoryId),
+          category: category.name ? category.name : 'Otros'
+        }
+      })
     }
   },
   actions: {
@@ -31,10 +39,12 @@ export default {
       commit('loading/SET_LOADING', true, { root: true })
       return db.collection('expenses').add(payload)
     }),
-    removeExpense: firestoreAction((context, expense) => {
+    removeExpense: firestoreAction(({ commit }, expense) => {
+      commit('loading/SET_LOADING', true, { root: true })
       db.collection('expenses')
         .doc(expense.id)
         .delete()
+        .then(() => commit('loading/SET_LOADING', false, { root: true }))
     }),
     updateExpense: firestoreAction((context, expense) => {
       console.log(expense)

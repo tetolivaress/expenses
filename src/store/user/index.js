@@ -77,7 +77,10 @@ export default {
             commit('setUser', newUser)
             router.push({ path: '/' })
           })
-        .catch(error => console.log(error))
+        .catch(error => {
+          commit('loading/SET_LOADING', false, { root: true })
+          console.log(error)
+        })
     },
     logout ({ commit }) {
       commit('SHOW_LOADING')

@@ -1,6 +1,9 @@
 <template>
   <v-container>
-    <v-row>
+    <v-row
+      v-for="(category, i) in sortedExpenses"
+      :key="i"
+    >
       <v-col
         cols="12"
         md="8"
@@ -10,9 +13,10 @@
           subheader
           two-line
         >
+          <v-subheader>{{ category.category }} - {{ spentCategory(category.expenses) }}</v-subheader>
           <v-list-item
-            v-for="(expense, i) in expense.expenses"
-            :key="i"
+            v-for="(expense, j) in category.expenses"
+            :key="j"
           >
             <v-list-item-avatar @click="selectedExpense = expense, openModal = true">
               <v-icon
@@ -94,7 +98,7 @@
   </v-container>
 </template>
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   data () {
@@ -107,16 +111,30 @@ export default {
     }
   },
   computed: {
-    ...mapState(['expense'])
+    ...mapState(['expense']),
+    ...mapGetters({
+      sortedExpenses: 'expense/sortedExpenses'
+    })
   },
   methods: {
-    ...mapActions('expense', ['removeExpense', 'updateExpense'])
+    ...mapActions('expense', ['removeExpense', 'updateExpense']),
+    spentCategory (expenses) {
+      return expenses.length
+        ? expenses
+          .map(expense => Number(expense.amount))
+          .reduce((acc, current) => acc + current)
+        : false
+    }
   },
   async created () {
     this.$store.commit('loading/SET_LOADING', true, { root: true })
-    await this.$store.dispatch('category/bindCategories')
-    await this.$store.dispatch('expense/bindExpenses')
-    this.$store.commit('loading/SET_LOADING', false, { root: true })
+    try {
+      await this.$store.dispatch('category/bindCategories')
+      await this.$store.dispatch('expense/bindExpenses')
+      this.$store.commit('loading/SET_LOADING', false, { root: true })
+    } catch (error) {
+      this.$store.commit('loading/SET_LOADING', false, { root: true })
+    }
   }
 }
 </script>

@@ -2,7 +2,7 @@
   <v-app>
     <div id="app">
       <NavBar/>
-      <router-view/>
+      <router-view class="mt-12"/>
     </div>
     <v-overlay
       :absolute="true"

@@ -6,7 +6,7 @@ import { db } from '@/store/db'
 export default {
   namespaced: true,
   state: {
-    categories: null
+    categories: []
   },
   actions: {
     bindCategories: firestoreAction(async ({ bindFirestoreRef, commit }) => {
@@ -22,10 +22,12 @@ export default {
         userId: context.state.user.id
       })
     }),
-    removeCategory: firestoreAction((context, category) => {
+    removeCategory: firestoreAction(({ commit }, category) => {
+      commit('loading/SET_LOADING', true, { root: true })
       db.collection('categories')
         .doc(category.id)
         .delete()
+        .then(() => commit('loading/SET_LOADING', false, { root: true }))
     })
   }
 }

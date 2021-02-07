@@ -7,7 +7,7 @@ import expense from '@/store/expense'
 import loading from '@/store/loading'
 import 'firebase/auth'
 
-import createPersistedState from 'vuex-persistedstate'
+// import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
@@ -20,6 +20,5 @@ export default new Vuex.Store({
   },
   mutations: {
     ...vuexfireMutations
-  },
-  plugins: [createPersistedState()]
+  }
 })

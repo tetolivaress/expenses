@@ -1,27 +1,16 @@
 <template>
   <v-app-bar
+    fixed
     color="blue lighten-5"
     elevate-on-scroll
   >
-    <v-app-bar-nav-icon></v-app-bar-nav-icon>
-
+    <v-icon color="blue" class="mx-4">mdi-minus-circle</v-icon>
     <v-toolbar-title>VExpenses</v-toolbar-title>
 
     <v-spacer></v-spacer>
 
-    <router-link to="/" v-if="user.user">
-      <v-btn icon>
-        <v-icon>mdi-home</v-icon>
-      </v-btn>
-    </router-link>
-
-    <router-link to="/login" v-if="!user">
-      <v-btn icon>
-        <v-icon>mdi-login</v-icon>
-      </v-btn>
-    </router-link>
     <v-btn
-      v-else
+      v-if="user"
       icon
       @click="logout"
     >

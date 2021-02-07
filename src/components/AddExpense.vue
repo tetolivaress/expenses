@@ -20,48 +20,44 @@
     </template>
     <v-card>
       <v-card-title class="headline grey lighten-2">
-        <v-date-picker v-model="picker" v-if="openDatePicker" @input="openDatePicker = !openDatePicker, date = $event"></v-date-picker>
+        <v-date-picker
+          v-model="picker"
+          v-if="openDatePicker"
+          @input="openDatePicker = !openDatePicker, date = $event"
+        ></v-date-picker>
         <div v-else @click="openDatePicker = !openDatePicker">
-          {{ date ? date : 'Change Date' }}
-          {{filteredCategories.length}}</div>
+          {{ date }}
+        </div>
+        <v-icon
+          color="green"
+          class="mx-6"
+          @click="openDatePicker = !openDatePicker"
+        >
+          mdi-circle-edit-outline
+        </v-icon>
       </v-card-title>
 
       <v-divider></v-divider>
 
       <v-form v-show="!openDatePicker">
         <v-container>
-          <v-autocomplete
+          <v-select
             :hint="`${filteredCategories.name}, ${filteredCategories.id}`"
             :items="filteredCategories"
             item-text="name"
             item-value="id"
             label="Solo field"
             solo
-            @update:search-input="searchCategory = $event ? $event : ''"
+            v-model="selectedCategory"
           >
             <template v-slot:append-outer>
-              <v-slide-x-reverse-transition
-                mode="out-in"
-              >
-                <v-icon v-if="filteredCategories.length > 1">
+              <router-link to="/category">
+                <v-icon>
                   mdi-circle-edit-outline
                 </v-icon>
-                <v-icon
-                  v-else-if="filteredCategories.length == 1"
-                  color="red"
-                >
-                  mdi-wrench
-                </v-icon>
-                <v-icon
-                  v-else
-                  color="primary"
-                >
-                  mdi-cloud-upload
-                </v-icon>
-              </v-slide-x-reverse-transition>
+              </router-link>
             </template>
-          </v-autocomplete>
-          {{filteredCategories.length}}
+          </v-select>
           <v-row>
             <v-col
               cols="12"
@@ -97,7 +93,7 @@
         <v-btn
           color="primary"
           text
-          @click="addExpense({ description, amount, userId: user.id, date: picker }), newExpense = false, description = '', amount = ''"
+          @click="addExpense({ description, amount, userId: user.id, date: picker, categoryId: selectedCategory }), newExpense = false, description = '', amount = ''"
         >
           Add
         </v-btn>
@@ -111,6 +107,7 @@ export default {
   name: 'AddExpense',
 
   data: () => ({
+    selectedCategory: '',
     searchCategory: '',
     date: new Date(),
     openDatePicker: false,
@@ -136,6 +133,9 @@ export default {
     async addExpense (expense) {
       await this['expense/addExpense'](expense)
       this.$store.commit('loading/SET_LOADING', false, { root: true })
+    },
+    clg (event) {
+      console.log(event)
     }
   }
 }
