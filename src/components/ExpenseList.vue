@@ -10,6 +10,11 @@
           subheader
           two-line
         >
+          <v-list-item>
+            <v-list-item-content>
+              Spent in {{ moment().format('MMMM') }} : {{ spent }}
+            </v-list-item-content>
+          </v-list-item>
           <v-list-group
             :value="false"
             prepend-icon="mdi-account-circle"
@@ -139,6 +144,7 @@
 </template>
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
+import moment from 'moment'
 
 export default {
   data () {
@@ -154,7 +160,8 @@ export default {
     ...mapState(['expense']),
     ...mapGetters({
       sortedExpenses: 'expense/sortedExpenses',
-      withoutCategory: 'expense/withoutCategory'
+      withoutCategory: 'expense/withoutCategory',
+      spent: 'expense/spent'
     })
   },
   methods: {
@@ -165,6 +172,9 @@ export default {
           .map(expense => Number(expense.amount))
           .reduce((acc, current) => acc + current)
         : false
+    },
+    moment () {
+      return moment()
     }
   },
   async created () {
