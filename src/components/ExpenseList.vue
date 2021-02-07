@@ -38,7 +38,7 @@
                 <v-list-item-content @click="selectedExpense = expense, openModal = true">
                   <v-list-item-title v-text="expense.description"></v-list-item-title>
                   <v-list-item-subtitle v-text="expense.amount"></v-list-item-subtitle>
-                  <v-list-item-subtitle v-text="expense.date"></v-list-item-subtitle>
+                  <v-list-item-subtitle v-text="moment(expense.date).format('dddd D MMMM YYYY')"></v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-action>
                   <v-btn icon @click="removeExpense(expense)">
@@ -74,7 +74,7 @@
                 <v-list-item-content @click="selectedExpense = expense, openModal = true">
                   <v-list-item-title v-text="expense.description"></v-list-item-title>
                   <v-list-item-subtitle v-text="expense.amount"></v-list-item-subtitle>
-                  <v-list-item-subtitle v-text="expense.date"></v-list-item-subtitle>
+                  <v-list-item-subtitle v-text="moment(expense.date).format('dddd D MMMM YYYY')"></v-list-item-subtitle>
                 </v-list-item-content>
                 <v-list-item-action>
                   <v-btn icon @click="removeExpense(expense)">
@@ -173,8 +173,8 @@ export default {
           .reduce((acc, current) => acc + current)
         : false
     },
-    moment () {
-      return moment()
+    moment (date) {
+      return date ? moment(date) : moment()
     }
   },
   async created () {
