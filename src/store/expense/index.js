@@ -20,10 +20,11 @@ export default {
       return rootState.category.categories.map(category => {
         return {
           expenses: expenses.filter(expense => category.id === expense.categoryId),
-          category: category.name ? category.name : 'Otros'
+          category: category.name
         }
       })
-    }
+    },
+    withoutCategory: ({ expenses }) => expenses.filter(expense => !expense.categoryId)
   },
   actions: {
     bindExpenses: firestoreAction(async ({ bindFirestoreRef, commit }) => {

@@ -133,9 +133,6 @@ export default {
     async addExpense (expense) {
       await this['expense/addExpense'](expense)
       this.$store.commit('loading/SET_LOADING', false, { root: true })
-    },
-    clg (event) {
-      console.log(event)
     }
   }
 }

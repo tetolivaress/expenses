@@ -16,10 +16,10 @@ export default {
       return bindFirestoreRef('categories', categories)
     }),
     addCategory: firestoreAction((context, payload) => {
-      // console.log(context.state)
+      context.commit('loading/SET_LOADING', true, { root: true })
       return db.collection('categories').add({
         name: payload,
-        userId: context.state.user.id
+        userId: context.rootState.user.user.id
       })
     }),
     removeCategory: firestoreAction(({ commit }, category) => {

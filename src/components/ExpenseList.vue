@@ -1,9 +1,6 @@
 <template>
   <v-container>
-    <v-row
-      v-for="(category, i) in sortedExpenses"
-      :key="i"
-    >
+    <v-row>
       <v-col
         cols="12"
         md="8"
@@ -13,32 +10,75 @@
           subheader
           two-line
         >
-          <v-subheader>{{ category.category }} - {{ spentCategory(category.expenses) }}</v-subheader>
-          <v-list-item
-            v-for="(expense, j) in category.expenses"
-            :key="j"
+          <v-list-group
+            :value="false"
+            prepend-icon="mdi-account-circle"
           >
-            <v-list-item-avatar @click="selectedExpense = expense, openModal = true">
-              <v-icon
-                class="grey lighten-1"
-                dark
+            <template v-slot:activator>
+              <v-list-item-title>Sin Categoria - {{ spentCategory(withoutCategory) }}</v-list-item-title>
+            </template>
+            <template v-if="withoutCategory.length">
+              <v-list-item
+                v-for="(expense, j) in withoutCategory"
+                :key="j"
               >
-                mdi-folder
-              </v-icon>
-            </v-list-item-avatar>
+                <v-list-item-avatar @click="selectedExpense = expense, openModal = true">
+                  <v-icon
+                    class="grey lighten-1"
+                    dark
+                  >
+                    mdi-folder
+                  </v-icon>
+                </v-list-item-avatar>
+                <v-list-item-content @click="selectedExpense = expense, openModal = true">
+                  <v-list-item-title v-text="expense.description"></v-list-item-title>
+                  <v-list-item-subtitle v-text="expense.amount"></v-list-item-subtitle>
+                  <v-list-item-subtitle v-text="expense.date"></v-list-item-subtitle>
+                </v-list-item-content>
+                <v-list-item-action>
+                  <v-btn icon @click="removeExpense(expense)">
+                    <v-icon color="red lighten-1">mdi-close</v-icon>
+                  </v-btn>
+                </v-list-item-action>
+              </v-list-item>
+            </template>
 
-            <v-list-item-content @click="selectedExpense = expense, openModal = true">
-              <v-list-item-title v-text="expense.description"></v-list-item-title>
-              <v-list-item-subtitle v-text="expense.amount"></v-list-item-subtitle>
-              <v-list-item-subtitle v-text="expense.date"></v-list-item-subtitle>
-            </v-list-item-content>
-
-            <v-list-item-action>
-              <v-btn icon @click="removeExpense(expense)">
-                <v-icon color="red lighten-1">mdi-close</v-icon>
-              </v-btn>
-            </v-list-item-action>
-          </v-list-item>
+          </v-list-group>
+          <v-list-group
+            :value="false"
+            prepend-icon="mdi-account-circle"
+            v-for="(category, i) in sortedExpenses"
+            :key="i"
+          >
+            <template v-slot:activator>
+              <v-list-item-title>{{ category.category }} - {{ spentCategory(category.expenses) }}</v-list-item-title>
+            </template>
+            <template>
+              <v-list-item
+                v-for="(expense, j) in category.expenses"
+                :key="j"
+              >
+                <v-list-item-avatar @click="selectedExpense = expense, openModal = true">
+                  <v-icon
+                    class="grey lighten-1"
+                    dark
+                  >
+                    mdi-folder
+                  </v-icon>
+                </v-list-item-avatar>
+                <v-list-item-content @click="selectedExpense = expense, openModal = true">
+                  <v-list-item-title v-text="expense.description"></v-list-item-title>
+                  <v-list-item-subtitle v-text="expense.amount"></v-list-item-subtitle>
+                  <v-list-item-subtitle v-text="expense.date"></v-list-item-subtitle>
+                </v-list-item-content>
+                <v-list-item-action>
+                  <v-btn icon @click="removeExpense(expense)">
+                    <v-icon color="red lighten-1">mdi-close</v-icon>
+                  </v-btn>
+                </v-list-item-action>
+              </v-list-item>
+            </template>
+          </v-list-group>
         </v-list>
       </v-col>
     </v-row>
@@ -113,7 +153,8 @@ export default {
   computed: {
     ...mapState(['expense']),
     ...mapGetters({
-      sortedExpenses: 'expense/sortedExpenses'
+      sortedExpenses: 'expense/sortedExpenses',
+      withoutCategory: 'expense/withoutCategory'
     })
   },
   methods: {
