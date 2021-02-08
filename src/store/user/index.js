@@ -82,6 +82,26 @@ export default {
           console.log(error)
         })
     },
+    signUserInFacebook ({ commit }) {
+      firebase.auth().signInWithPopup(new firebase.auth.FacebookAuthProvider())
+        .then(
+          user => {
+            const newUser = {
+              id: user.uid,
+              name: user.displayName,
+              email: user.email,
+              photoUrl: user.photoURL
+            }
+            commit('setUser', newUser)
+            router.push({ path: '/' })
+          }
+        )
+        .catch(
+          error => {
+            console.log(error)
+          }
+        )
+    },
     logout ({ commit }) {
       commit('SHOW_LOADING')
       firebase.auth().signOut()

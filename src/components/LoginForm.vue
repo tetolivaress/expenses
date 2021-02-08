@@ -47,6 +47,12 @@
       >
         signInWithGoogle
       </v-btn>
+      <v-btn
+        class="mt-4"
+        @click="signUserInFacebook"
+      >
+        Login Facebook
+      </v-btn>
     </v-row>
   </v-container>
 </template>
@@ -78,7 +84,7 @@ export default {
     resetValidation () {
       this.$refs.form.resetValidation()
     },
-    ...mapActions('user', ['signInWithGoogle'])
+    ...mapActions('user', ['signInWithGoogle', 'signUserInFacebook'])
   }
 }
 </script>
