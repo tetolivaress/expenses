@@ -85,7 +85,7 @@ export default {
     signUserInFacebook ({ commit }) {
       firebase.auth().signInWithPopup(new firebase.auth.FacebookAuthProvider())
         .then(
-          user => {
+          ({ user }) => {
             const newUser = {
               id: user.uid,
               name: user.displayName,
