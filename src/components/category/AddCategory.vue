@@ -59,6 +59,7 @@ export default {
     ...mapActions(['category/addCategory']),
     async addCategory (category) {
       await this['category/addCategory'](category)
+      this.newCategory = false
       this.$store.commit('loading/SET_LOADING', false, { root: true })
     }
   }

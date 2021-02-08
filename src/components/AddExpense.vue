@@ -32,6 +32,7 @@
           color="green"
           class="mx-6"
           @click="openDatePicker = !openDatePicker"
+          v-if="!openDatePicker"
         >
           mdi-circle-edit-outline
         </v-icon>
@@ -93,6 +94,7 @@
         <v-btn
           color="primary"
           text
+          v-if="!openDatePicker"
           @click="addExpense({ description, amount, userId: user.id, date: picker, categoryId: selectedCategory }), newExpense = false, description = '', amount = ''"
         >
           Add
