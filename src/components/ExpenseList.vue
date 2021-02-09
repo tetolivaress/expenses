@@ -18,6 +18,7 @@
           <v-list-group
             :value="false"
             prepend-icon="mdi-account-circle"
+            v-if="spentCategory(withoutCategory).length"
           >
             <template v-slot:activator>
               <v-list-item-title>
