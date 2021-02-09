@@ -40,6 +40,7 @@
           color="primary"
           text
           @click="addCategory(name)"
+          v-if="!category.categories.filter(category => category.name == name).length"
         >
           Add
         </v-btn>
@@ -48,13 +49,16 @@
   </v-dialog>
 </template>
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'AddCategory',
   data: () => ({
     name: '',
     newCategory: false
   }),
+  computed: {
+    ...mapState(['category'])
+  },
   methods: {
     ...mapActions(['category/addCategory']),
     async addCategory (category) {

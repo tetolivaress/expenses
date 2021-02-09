@@ -40,14 +40,14 @@
 
       <v-divider></v-divider>
 
-      <v-form v-show="!openDatePicker">
+      <v-form v-show="!openDatePicker" @input="formHasError = $event">
         <v-container>
           <v-select
             :hint="`${filteredCategories.name}, ${filteredCategories.id}`"
             :items="filteredCategories"
             item-text="name"
             item-value="id"
-            label="Solo field"
+            label="Category"
             solo
             v-model="selectedCategory"
           >
@@ -66,7 +66,6 @@
             >
               <v-text-field
                 v-model="description"
-                :counter="10"
                 label="Description"
                 required
                 solo
@@ -79,17 +78,19 @@
             >
               <v-text-field
                 v-model="amount"
-                :counter="10"
-                label="Mount"
+                label="Amount"
                 required
                 solo
+                :rules="[numberRule]"
+                @update:error="formError = true"
+                @change="formError = false"
               ></v-text-field>
             </v-col>
           </v-row>
         </v-container>
       </v-form>
 
-      <v-card-actions>
+      <v-card-actions v-if="formHasError">
         <v-spacer></v-spacer>
         <v-btn
           color="primary"
@@ -110,6 +111,7 @@ export default {
   name: 'AddExpense',
 
   data: () => ({
+    formHasError: true,
     selectedCategory: '',
     searchCategory: '',
     date: '',
@@ -117,7 +119,12 @@ export default {
     picker: new Date().toISOString().substr(0, 10),
     description: '',
     amount: '',
-    newExpense: false
+    newExpense: false,
+    numberRule: v => {
+      if (!v.trim()) return true
+      if (!isNaN(parseFloat(v)) && v >= 0 && v <= 999999999) return true
+      return 'Number has to be between 0 and 999999999'
+    }
   }),
   computed: {
     ...mapState({
