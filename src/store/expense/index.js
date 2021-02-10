@@ -51,7 +51,11 @@ export default {
       console.log(expense)
       db.collection('expenses')
         .doc(expense.id)
-        .update({ description: expense.description, amount: expense.amount })
+        .update({
+          description: expense.description,
+          amount: expense.amount,
+          categoryId: expense.category
+        })
         .then(() => {
           console.log('expense updated!')
         })

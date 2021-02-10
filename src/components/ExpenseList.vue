@@ -18,7 +18,7 @@
           <v-list-group
             :value="false"
             prepend-icon="mdi-account-circle"
-            v-if="spentCategory(withoutCategory).length"
+            v-if="withoutCategory.length"
           >
             <template v-slot:activator>
               <v-list-item-title>
@@ -126,6 +126,23 @@
                 cols="12"
                 md="8"
               >
+                <v-select
+                  :hint="`${categories.name}, ${categories.id}`"
+                  :items="categories"
+                  item-text="name"
+                  item-value="id"
+                  label="Category"
+                  solo
+                  v-model="selectedExpense.category"
+                >
+                  <template v-slot:append-outer>
+                    <router-link to="/category">
+                      <v-icon>
+                        mdi-circle-edit-outline
+                      </v-icon>
+                    </router-link>
+                  </template>
+                </v-select>
                 <v-text-field
                   v-model="selectedExpense.description"
                   :counter="10"
@@ -172,13 +189,18 @@ export default {
     return {
       selectedExpense: {
         description: '',
-        amount: ''
+        amount: '',
+        date: '',
+        category: ''
       },
       openModal: false
     }
   },
   computed: {
-    ...mapState(['expense']),
+    ...mapState({
+      user: ({ user }) => user.user,
+      categories: ({ category }) => category.categories
+    }),
     ...mapGetters({
       sortedExpenses: 'expense/sortedExpenses',
       withoutCategory: 'expense/withoutCategory',
