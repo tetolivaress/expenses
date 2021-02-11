@@ -25,12 +25,19 @@
           <v-icon color="red lighten-1">mdi-close</v-icon>
         </v-btn>
       </v-list-item-action>
+      <v-list-item-action v-else>
+        <EditCategory :category="category"/>
+      </v-list-item-action>
     </v-list-item>
   </v-list>
 </template>
 <script>
 import { mapState, mapActions } from 'vuex'
+import EditCategory from '@/components/category/EditCategory'
 export default {
+  components: {
+    EditCategory
+  },
   computed: {
     ...mapState({
       expenses: ({ expense }) => expense.expenses,

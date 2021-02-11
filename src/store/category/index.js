@@ -28,6 +28,16 @@ export default {
         .doc(category.id)
         .delete()
         .then(() => commit('loading/SET_LOADING', false, { root: true }))
+    }),
+    updateCategory: firestoreAction(({ commit }, { id, name }) => {
+      console.log(id, name)
+      db.collection('expencategorises')
+        .doc(id)
+        .update({ name })
+        .then(() => {
+          console.log('expense updated!')
+        })
+        .catch(error => console.error(error))
     })
   }
 }
