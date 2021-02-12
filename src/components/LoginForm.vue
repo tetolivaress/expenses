@@ -1,60 +1,20 @@
 <template>
   <v-container>
-    <v-row justify="center">
-      <v-col cols="10" md="6">
-        <!-- <v-form
-          ref="form"
-          v-model="valid"
-          lazy-validation
-        >
-          <br>
-          <br>
-          <br>
-          <v-text-field
-            v-model="email"
-            :rules="emailRules"
-            label="E-mail"
-            required
-          ></v-text-field>
-
-          <v-text-field
-            v-model="password"
-            label="Password"
-            required
-          ></v-text-field>
-        </v-form> -->
-      </v-col>
-    </v-row>
-    <v-row justify="center">
-      <!-- <v-btn
-        :disabled="!valid"
-        color="success"
-        class="mr-4"
-        @click="signUserIn({email, password})"
-      >
-        SignIn
-      </v-btn>
-      <router-link to="/signup">
-        <v-btn
-          color="red"
-        >
-          SignUp
-        </v-btn>
-      </router-link> -->
-    </v-row>
-    <v-row>
+    <v-row align="center" justify="center" class="mt-16 pt-16">
       <v-btn
+        x-large
         color=""
         class="mt-4"
         @click="signInWithGoogle"
       >
-        signInWithGoogle
+        Login Google
       </v-btn>
     </v-row>
-    <v-row>
+    <v-row align="center" justify="center" class="mt-8">
       <v-btn
+        x-large
         color="blue"
-        class="mt-4"
+        class="mt-4 white--text"
         @click="signUserInFacebook"
       >
         Login Facebook
