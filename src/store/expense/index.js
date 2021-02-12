@@ -21,6 +21,7 @@ export default {
         ? expenses
           .map(expense => Number(expense.amount))
           .reduce((acc, current) => acc + current)
+          .toFixed(2)
         : 'Aún no tienes nada Registrado'
     },
     sortedExpenses: ({ expenses }, { spent }, rootState) => {
