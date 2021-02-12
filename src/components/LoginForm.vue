@@ -14,7 +14,7 @@
       <v-btn
         x-large
         color="blue"
-        class="mt-4"
+        class="mt-4 white--text"
         @click="signUserInFacebook"
       >
         Login Facebook
