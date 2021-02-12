@@ -114,10 +114,23 @@
     >
       <v-card>
         <v-card-title class="headline grey lighten-2">
-          Update Expense
+          <v-date-picker
+            v-model="picker"
+            v-if="openDatePicker"
+            @input="openDatePicker = !openDatePicker, selectedExpense.date = $event"
+          ></v-date-picker>
+          <div v-else @click="openDatePicker = !openDatePicker">
+            {{ selectedExpense.date ? moment(selectedExpense.date).format('DD - MMMM') : moment().format('DD - MMMM') }}
+          </div>
+          <v-icon
+            color="green"
+            class="mx-6"
+            @click="openDatePicker = !openDatePicker"
+            v-if="!openDatePicker"
+          >
+            mdi-circle-edit-outline
+          </v-icon>
         </v-card-title>
-
-        <v-divider></v-divider>
 
         <v-form>
           <v-container>
@@ -133,7 +146,7 @@
                   item-value="id"
                   label="Category"
                   solo
-                  v-model="selectedExpense.category"
+                  v-model="selectedExpense.categoryId"
                 >
                   <template v-slot:append-outer>
                     <router-link to="/category">
@@ -191,9 +204,11 @@ export default {
         description: '',
         amount: '',
         date: '',
-        category: ''
+        categoryId: ''
       },
-      openModal: false
+      openModal: false,
+      openDatePicker: false,
+      picker: new Date().toISOString().substr(0, 10)
     }
   },
   computed: {

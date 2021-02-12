@@ -54,7 +54,8 @@ export default {
         .update({
           description: expense.description,
           amount: expense.amount,
-          categoryId: expense.category
+          date: expense.date,
+          categoryId: expense.categoryId
         })
         .then(() => {
           console.log('expense updated!')
