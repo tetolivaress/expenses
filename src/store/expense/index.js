@@ -2,11 +2,18 @@ import firebase from 'firebase/app'
 import 'firebase/auth'
 import { firestoreAction } from 'vuexfire'
 import { db } from '@/store/db'
+import moment from 'moment'
 
 export default {
   namespaced: true,
   state: {
-    expenses: []
+    expenses: [],
+    currentMonth: moment().format('MMMM')
+  },
+  mutations: {
+    CHANGE_MONTH ({ currentMonth }, payload) {
+      currentMonth = payload
+    }
   },
   getters: {
     spent: ({ expenses }) => {
@@ -24,7 +31,8 @@ export default {
         }
       })
     },
-    withoutCategory: ({ expenses }) => expenses.filter(expense => !expense.categoryId)
+    withoutCategory: ({ expenses }) => expenses.filter(expense => !expense.categoryId),
+    months: ({ expenses }) => [...new Set(expenses.map(({ date }) => moment(date).format('MMMM')))]
   },
   actions: {
     bindExpenses: firestoreAction(async ({ bindFirestoreRef, commit }) => {
