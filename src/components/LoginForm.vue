@@ -7,7 +7,7 @@
         class="mt-4"
         @click="signInWithGoogle"
       >
-        signInWithGoogle
+        Login Google
       </v-btn>
     </v-row>
     <v-row align="center" justify="center" class="mt-8">
