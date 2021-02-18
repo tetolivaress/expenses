@@ -47,7 +47,7 @@
             :items="filteredCategories"
             item-text="name"
             item-value="id"
-            label="Category"
+            :label="$t('category')"
             solo
             v-model="selectedCategory"
           >
@@ -66,7 +66,7 @@
             >
               <v-text-field
                 v-model="description"
-                label="Description"
+                :label="$t('description')"
                 required
                 solo
               ></v-text-field>
@@ -78,7 +78,7 @@
             >
               <v-text-field
                 v-model="amount"
-                label="Amount"
+                :label="$t('amount')"
                 required
                 solo
                 :rules="[numberRule]"
@@ -98,7 +98,7 @@
           v-if="!openDatePicker"
           @click="addExpense({ description, amount, userId: user.id, date: picker, categoryId: selectedCategory }), newExpense = false, description = '', amount = ''"
         >
-          Add
+          {{ $t('add') }}
         </v-btn>
       </v-card-actions>
     </v-card>

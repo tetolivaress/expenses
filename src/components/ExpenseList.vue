@@ -12,7 +12,7 @@
         >
           <v-list-item>
             <v-list-item-content>
-              Spent in {{ moment().format('MMMM') }} : {{ spent }}
+              {{ $t('spentIn', { month: moment().format('MMMM') }) }}
             </v-list-item-content>
           </v-list-item>
           <v-list-group
@@ -26,7 +26,7 @@
                   color="red"
                   :content="withoutCategory.length"
                 >
-                  Sin Categoria - {{ spentCategory(withoutCategory) }}
+                  {{ $t('noCategory') }} - {{ spentCategory(withoutCategory) }}
                 </v-badge>
               </v-list-item-title>
             </template>
@@ -144,7 +144,7 @@
                   :items="categories"
                   item-text="name"
                   item-value="id"
-                  label="Category"
+                  :label="$t('category')"
                   solo
                   v-model="selectedExpense.categoryId"
                 >
@@ -159,7 +159,7 @@
                 <v-text-field
                   v-model="selectedExpense.description"
                   :counter="10"
-                  label="Description"
+                  :label="$t('description')"
                   required
                 ></v-text-field>
               </v-col>
@@ -171,7 +171,7 @@
                 <v-text-field
                   v-model="selectedExpense.amount"
                   :counter="10"
-                  label="Mount"
+                  :label="$t('amount')"
                   required
                 ></v-text-field>
               </v-col>
@@ -186,7 +186,7 @@
             text
             @click="updateExpense(selectedExpense), openModal = false"
           >
-            Update
+            {{ $t('update') }}
           </v-btn>
         </v-card-actions>
       </v-card>

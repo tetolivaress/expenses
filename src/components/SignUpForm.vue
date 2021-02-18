@@ -19,7 +19,7 @@
 
           <v-text-field
             v-model="password"
-            label="Password"
+            :label="$t('password')"
             required
           ></v-text-field>
         </v-form>
@@ -32,13 +32,13 @@
         class="mr-4"
         @click="signUserUp({email, password})"
       >
-        SignUp
+        {{ $t('signUp') }}
       </v-btn>
       <router-link to="/login">
         <v-btn
           color="red"
         >
-          Login
+          {{ $t('login') }}
         </v-btn>
       </router-link>
     </v-row>

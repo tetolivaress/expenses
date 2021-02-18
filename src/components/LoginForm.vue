@@ -7,7 +7,7 @@
         class="mt-4"
         @click="signInWithGoogle"
       >
-        Login Google
+        {{$t('googleLogin')}}
       </v-btn>
     </v-row>
     <v-row align="center" justify="center" class="mt-8">
@@ -17,7 +17,7 @@
         class="mt-4 white--text"
         @click="signUserInFacebook"
       >
-        Login Facebook
+        {{$t('facebookLogin')}}
       </v-btn>
     </v-row>
   </v-container>

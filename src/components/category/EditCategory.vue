@@ -21,7 +21,7 @@
     </template>
     <v-card>
       <v-card-title class="headline grey lighten-2">
-        Add New Category
+        {{ $t('addNewCategory') }}
       </v-card-title>
 
       <v-divider></v-divider>
@@ -43,7 +43,7 @@
           @click="updateCategory(newName)"
           v-if="!category.categories.filter(category => category.name == name).length"
         >
-          Add
+          {{ $t('add') }}
         </v-btn>
       </v-card-actions>
     </v-card>
