@@ -58,7 +58,9 @@
         class="overflow-y-auto mt-16"
         max-height="90vh"
       >
-        <router-view class="mt-16 pt-8"/>
+        <div class="mt-16 pt-16">
+          <router-view class="mt-8"/>
+        </div>
       </v-sheet>
       <v-bottom-navigation
         v-if="user.user"
