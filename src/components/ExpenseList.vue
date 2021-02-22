@@ -12,7 +12,7 @@
         >
           <v-list-item>
             <v-list-item-content>
-              {{ $t('spentIn', { month: moment().format('MMMM') }) }}
+              {{ $t('spentIn', { month: moment().format('MMMM') }) }} : {{ spent }}
             </v-list-item-content>
           </v-list-item>
           <v-list-group
