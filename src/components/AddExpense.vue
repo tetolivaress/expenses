@@ -14,6 +14,7 @@
         right
         fixed
         color="primary"
+        class="mb-12"
       >
         <v-icon>mdi-plus</v-icon>
       </v-btn>
