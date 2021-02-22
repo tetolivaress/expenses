@@ -26,7 +26,7 @@
         <v-list-item
           v-for="lang in langs"
           :key="lang"
-          @click="$i18n.locale = lang"
+          @click="setLanguage(lang)"
         >
           <v-list-item-title>{{ lang }}</v-list-item-title>
         </v-list-item>
@@ -43,6 +43,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import moment from 'moment'
 export default {
   computed: {
     ...mapState(['user'])
@@ -59,6 +60,7 @@ export default {
     },
     setLanguage (lang) {
       this.$i18n.locale = lang
+      moment.locale(lang)
     }
   }
 }
