@@ -21,6 +21,30 @@
         >
           <v-icon>mdi-logout</v-icon>
         </v-btn>
+        <v-menu
+          offset-y
+          >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              icon
+              v-bind="attrs"
+              v-on="on"
+            >
+              <v-icon>mdi-translate</v-icon>
+              <v-icon>mdi-chevron-down</v-icon>
+            </v-btn>
+          </template>
+
+          <v-list>
+            <v-list-item
+              v-for="lang in langs"
+              :key="lang"
+              @click="setLanguage(lang)"
+            >
+              <v-list-item-title>{{ lang }}</v-list-item-title>
+            </v-list-item>
+          </v-list>
+        </v-menu>
         <template v-slot:extension>
           <v-tabs v-if="user.user" align-with-title class="d-none d-md-block">
             <v-tab>Expenses</v-tab>
@@ -79,6 +103,7 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
+import moment from 'moment'
 
 export default {
   name: 'App',
@@ -86,7 +111,8 @@ export default {
     description: '',
     amount: 0,
     newExpense: false,
-    selectedExpense: 0
+    selectedExpense: 0,
+    langs: ['en', 'es']
   }),
   computed: mapState({
     ...mapState(['expenses', 'loading', 'user']),
@@ -97,6 +123,10 @@ export default {
     logout () {
       this.$store.dispatch('user/logout')
         .then(() => this.$router.push({ path: '/login' }))
+    },
+    setLanguage (lang) {
+      this.$i18n.locale = lang
+      moment.locale(lang)
     }
   }
 }
