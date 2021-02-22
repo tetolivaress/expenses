@@ -7,16 +7,10 @@
       <v-btn
         v-bind="attrs"
         v-on="on"
-        fab
-        large
-        dark
-        bottom
-        right
-        fixed
-        color="primary"
+        color="red"
         @click="editCategory = true"
       >
-        <v-icon>mdi-edit</v-icon>
+        <v-icon>mdi-circle-edit-outline</v-icon>
       </v-btn>
     </template>
     <v-card>
@@ -28,7 +22,7 @@
 
       <v-form>
         <v-text-field
-          v-model="name"
+          v-model="newName"
           label="Name"
           required
           solo
@@ -41,7 +35,6 @@
           color="primary"
           text
           @click="updateCategory(newName)"
-          v-if="!category.categories.filter(category => category.name == name).length"
         >
           {{ $t('add') }}
         </v-btn>
@@ -56,7 +49,7 @@ export default {
   data () {
     return {
       editCategory: false,
-      newName: {}
+      newName: ''
     }
   },
   watch: {
