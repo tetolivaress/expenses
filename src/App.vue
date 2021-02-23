@@ -8,19 +8,19 @@
         shrink-on-scroll
         prominent
         scroll-target="#scrolling-techniques"
+        src="@/assets/background.jpg"
       >
+        <template v-slot:img="{ props }">
+          <v-img
+            v-bind="props"
+            gradient="to top right, rgba(36,113,163,.65), rgba(33,97,140,.65)"
+          ></v-img>
+        </template>
         <v-icon color="blue" class="mx-4">mdi-minus-circle</v-icon>
         <v-toolbar-title>VExpenses</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
-        <v-btn
-          v-if="user"
-          icon
-          @click="logout"
-        >
-          <v-icon>mdi-logout</v-icon>
-        </v-btn>
         <v-menu
           offset-y
           >
@@ -45,6 +45,14 @@
             </v-list-item>
           </v-list>
         </v-menu>
+
+        <v-btn
+          v-if="user.user"
+          icon
+          @click="logout"
+        >
+          <v-icon>mdi-logout</v-icon>
+        </v-btn>
         <template v-slot:extension>
           <v-tabs v-if="user.user" align-with-title class="d-none d-md-block">
             <v-tab>Expenses</v-tab>
