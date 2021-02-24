@@ -1,14 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import PageNotFound from '@/views/PageNotFound'
 import Home from '@/views/Home'
 import Login from '@/views/Login'
 import SignUp from '@/views/SignUp'
 import Category from '@/views/Category'
+import Income from '@/views/Income'
+import Investment from '@/views/Investment'
 import Store from '@/store/index'
 
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '*',
+    component: PageNotFound
+  },
   {
     path: '/',
     name: 'Home',
@@ -48,6 +55,28 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: Category,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/income',
+    name: 'income',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: Income,
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
+    path: '/investment',
+    name: 'investment',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: Investment,
     meta: {
       requiresAuth: true
     }

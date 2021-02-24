@@ -4,6 +4,8 @@ import user from '@/store/user'
 import { vuexfireMutations } from 'vuexfire'
 import category from '@/store/category'
 import expense from '@/store/expense'
+import income from '@/store/income'
+import investment from '@/store/investment'
 import loading from '@/store/loading'
 import 'firebase/auth'
 
@@ -16,6 +18,8 @@ export default new Vuex.Store({
     user,
     category,
     expense,
+    income,
+    investment,
     loading
   },
   mutations: {
