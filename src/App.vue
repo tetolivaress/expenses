@@ -17,7 +17,8 @@
           ></v-img>
         </template>
         <v-icon color="blue" class="mx-4">mdi-minus-circle</v-icon>
-        <v-toolbar-title>VExpenses</v-toolbar-title>
+        <v-toolbar-title v-if="spent">{{ spent }}$: {{ $t('spentIn', { month: moment().format('MMMM') }) }}</v-toolbar-title>
+        <v-toolbar-title v-else>Gastos</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
@@ -138,7 +139,9 @@ export default {
   }),
   computed: mapState({
     ...mapState(['expenses', 'loading', 'user']),
-    ...mapGetters(['spent'])
+    ...mapGetters({
+      spent: 'expense/spent'
+    })
   }),
   methods: {
     ...mapActions(['removeExpense', 'updateExpense']),
@@ -149,6 +152,9 @@ export default {
     setLanguage (lang) {
       this.$i18n.locale = lang
       moment.locale(lang)
+    },
+    moment (date) {
+      return date ? moment(date) : moment()
     }
   }
 }

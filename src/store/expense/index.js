@@ -22,7 +22,7 @@ export default {
           .map(expense => Number(expense.amount))
           .reduce((acc, current) => acc + current)
           .toFixed(2)
-        : 'Aún no tienes nada Registrado'
+        : 0
     },
     sortedExpenses: ({ expenses }, { spent }, rootState) => {
       return rootState.category.categories.map(category => {

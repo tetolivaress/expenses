@@ -10,11 +10,6 @@
           subheader
           two-line
         >
-          <v-list-item>
-            <v-list-item-content>
-              {{ $t('spentIn', { month: moment().format('MMMM') }) }} : {{ spent }}
-            </v-list-item-content>
-          </v-list-item>
           <v-list-group
             :value="false"
             prepend-icon="mdi-account-circle"
