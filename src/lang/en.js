@@ -11,5 +11,8 @@ export default {
   password: 'Password',
   signUp: 'SignUp',
   logIn: 'Login',
-  addNewCategory: 'Add New Category'
+  addNewCategory: 'Add New Category',
+  expenses: 'Expenses',
+  incomes: 'Incomes',
+  investments: 'Investments'
 }
