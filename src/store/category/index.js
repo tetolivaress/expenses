@@ -1,36 +1,43 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
-import { vuexfireMutations, firestoreAction } from 'vuexfire'
+import { firestoreAction } from 'vuexfire'
 import { db } from '@/store/db'
 
 export default {
   namespaced: true,
   state: {
-    categories: null
-  },
-  mutations: {
-    setUser (state, payload) {
-      state.user = payload
-    },
-    setLoading (state, payload) {
-      state.isLoading = payload
-    },
-    ...vuexfireMutations
+    categories: []
   },
   actions: {
     bindCategories: firestoreAction(async ({ bindFirestoreRef, commit }) => {
-      commit('setLoading', true)
+      // commit('loading/SET_LOADING', true, { root: true })
       const { uid } = firebase.auth().currentUser
       const categories = db.collection('categories').where('userId', '==', uid)
       return bindFirestoreRef('categories', categories)
     }),
     addCategory: firestoreAction((context, payload) => {
-      return db.collection('categories').add(payload)
+      context.commit('loading/SET_LOADING', true, { root: true })
+      return db.collection('categories').add({
+        name: payload,
+        userId: context.rootState.user.user.id
+      })
     }),
-    removeCategory: firestoreAction((context, category) => {
+    removeCategory: firestoreAction(({ commit }, category) => {
+      commit('loading/SET_LOADING', true, { root: true })
       db.collection('categories')
         .doc(category.id)
         .delete()
+        .then(() => commit('loading/SET_LOADING', false, { root: true }))
+    }),
+    updateCategory: firestoreAction(({ commit }, { id, name }) => {
+      console.log(id, name)
+      db.collection('expencategorises')
+        .doc(id)
+        .update({ name })
+        .then(() => {
+          console.log('expense updated!')
+        })
+        .catch(error => console.error(error))
     })
   }
 }

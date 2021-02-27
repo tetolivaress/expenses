@@ -1,0 +1,71 @@
+<template>
+  <v-dialog
+    v-model="newCategory"
+    width="500"
+  >
+    <template v-slot:activator="{ on, attrs }">
+      <v-btn
+        v-bind="attrs"
+        v-on="on"
+        fab
+        large
+        dark
+        bottom
+        right
+        fixed
+        color="primary"
+      >
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+    </template>
+    <v-card>
+      <v-card-title class="headline grey lighten-2">
+        {{$t('addNewCategory')}}
+      </v-card-title>
+
+      <v-divider></v-divider>
+
+      <v-form>
+        <v-text-field
+          v-model="name"
+          label="Name"
+          required
+          solo
+        ></v-text-field>
+      </v-form>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn
+          color="primary"
+          text
+          @click="addCategory(name)"
+          v-if="!category.categories.filter(category => category.name == name).length"
+        >
+          {{ $t('add') }}
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+</template>
+<script>
+import { mapActions, mapState } from 'vuex'
+export default {
+  name: 'AddCategory',
+  data: () => ({
+    name: '',
+    newCategory: false
+  }),
+  computed: {
+    ...mapState(['category'])
+  },
+  methods: {
+    ...mapActions(['category/addCategory']),
+    async addCategory (category) {
+      await this['category/addCategory'](category)
+      this.newCategory = false
+      this.$store.commit('loading/SET_LOADING', false, { root: true })
+    }
+  }
+}
+</script>

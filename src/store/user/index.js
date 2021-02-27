@@ -3,20 +3,18 @@ import 'firebase/auth'
 import router from '@/router'
 
 export default {
+  namespaced: true,
   state: {
     user: null
   },
   mutations: {
     setUser (state, payload) {
       state.user = payload
-    },
-    setLoading (state, payload) {
-      state.isLoading = payload
     }
   },
   actions: {
     signUserUp ({ commit }, payload) {
-      commit('setLoading', true)
+      commit('SHOW_LOADING')
       firebase.auth().createUserWithEmailAndPassword(payload.email, payload.password)
         .then(
           ({ user }) => {
@@ -27,24 +25,24 @@ export default {
               photoUrl: user.photoURL
             }
             commit('setUser', newUser)
-            commit('setLoading', false)
+            commit('HIDE_LOADING')
             router.push({ path: '/' })
           }
         )
         .catch(
           error => {
-            commit('setLoading', false)
+            commit('HIDE_LOADING')
             // commit('setError', error)
             console.log(error)
           }
         )
     },
     signUserIn ({ commit }, payload) {
-      commit('setLoading', true)
+      // commit('SHOW_LOADING')
       firebase.auth().signInWithEmailAndPassword(payload.email, payload.password)
         .then(
           ({ user }) => {
-            console.log(user)
+            // console.log(user)
             const newUser = {
               id: user.uid,
               name: user.displayName,
@@ -64,11 +62,12 @@ export default {
         )
     },
     signInWithGoogle ({ commit }) {
+      commit('loading/SET_LOADING', true, { root: true })
       const provider = new firebase.auth.GoogleAuthProvider()
       firebase.auth().signInWithPopup(provider)
         .then(
           ({ user }) => {
-            console.log(user)
+            // console.log(user)
             const newUser = {
               id: user.uid,
               name: user.displayName,
@@ -78,10 +77,33 @@ export default {
             commit('setUser', newUser)
             router.push({ path: '/' })
           })
-        .catch(error => console.log(error))
+        .catch(error => {
+          commit('loading/SET_LOADING', false, { root: true })
+          console.log(error)
+        })
+    },
+    signUserInFacebook ({ commit }) {
+      firebase.auth().signInWithPopup(new firebase.auth.FacebookAuthProvider())
+        .then(
+          ({ user }) => {
+            const newUser = {
+              id: user.uid,
+              name: user.displayName,
+              email: user.email,
+              photoUrl: user.photoURL
+            }
+            commit('setUser', newUser)
+            router.push({ path: '/' })
+          }
+        )
+        .catch(
+          error => {
+            console.log(error)
+          }
+        )
     },
     logout ({ commit }) {
-      commit('setLoeading', true)
+      commit('SHOW_LOADING')
       firebase.auth().signOut()
       commit('setUser', null)
       // router.push({ path: '/login' })

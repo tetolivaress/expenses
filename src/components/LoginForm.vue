@@ -1,21 +1,26 @@
-<template lang="pug">
-  v-container
-    v-row(justify='center')
-      v-col(cols='10' md='6')
-        v-form(ref='form' v-model='valid' lazy-validation='')
-          br
-          br
-          br
-          v-text-field(v-model='email' :rules='emailRules' label='E-mail' required='')
-          v-text-field(v-model='password' label='Password' required='')
-    v-row(justify='center')
-      v-btn.mr-4(:disabled='!valid' color='success' @click='signUserIn({email, password})')
-        | SignIn
-      router-link(to='/signup')
-        v-btn(color='red')
-          | SignUp
-      v-btn.mt-4(@click='signInWithGoogle')
-        | signInWithGoogle
+<template>
+  <v-container>
+    <v-row align="center" justify="center" class="mt-16 pt-16">
+      <v-btn
+        x-large
+        color=""
+        class="mt-4"
+        @click="signInWithGoogle"
+      >
+        {{$t('googleLogin')}}
+      </v-btn>
+    </v-row>
+    <v-row align="center" justify="center" class="mt-8">
+      <v-btn
+        x-large
+        color="blue"
+        class="mt-4 white--text"
+        @click="signUserInFacebook"
+      >
+        {{$t('facebookLogin')}}
+      </v-btn>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -45,7 +50,7 @@ export default {
     resetValidation () {
       this.$refs.form.resetValidation()
     },
-    ...mapActions(['signUserIn', 'signInWithGoogle'])
+    ...mapActions('user', ['signInWithGoogle', 'signUserInFacebook'])
   }
 }
 </script>
