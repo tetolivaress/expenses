@@ -1,26 +1,21 @@
-<template>
-  <v-container>
-    <v-row align="center" justify="center" class="mt-16 pt-16">
-      <v-btn
+<template lang="pug">
+  v-container
+    v-row(align="center" justify="center" class="mt-16 pt-16")
+      v-btn(
         x-large
         color=""
         class="mt-4"
         @click="signInWithGoogle"
-      >
-        {{$t('googleLogin')}}
-      </v-btn>
-    </v-row>
-    <v-row align="center" justify="center" class="mt-8">
-      <v-btn
+      )
+        | {{$t('googleLogin')}}
+    v-row(align="center" justify="center" class="mt-8")
+      v-btn(
         x-large
         color="blue"
         class="mt-4 white--text"
         @click="signUserInFacebook"
-      >
-        {{$t('facebookLogin')}}
-      </v-btn>
-    </v-row>
-  </v-container>
+      )
+        | {{$t('facebookLogin')}}
 </template>
 
 <script>

@@ -1,45 +1,38 @@
-<template>
-  <v-app-bar
+<template lang="pug">
+  v-app-bar(
     fixed
     color="blue lighten-5"
     elevate-on-scroll
-  >
-    <v-icon color="blue" class="mx-4">mdi-minus-circle</v-icon>
-    <v-toolbar-title>VExpenses</v-toolbar-title>
+  )
+    v-icon(color="blue" class="mx-4") mdi-minus-circle
+    v-toolbar-title VExpenses
 
-    <v-spacer></v-spacer>
-    <v-menu
+    v-spacer
+    v-menu(
       offset-y
-      >
-      <template v-slot:activator="{ on, attrs }">
-        <v-btn
+    )
+      template(v-slot:activator="{ on, attrs }")
+        v-btn(
           icon
           v-bind="attrs"
           v-on="on"
-        >
-          <v-icon>mdi-translate</v-icon>
-          <v-icon>mdi-chevron-down</v-icon>
-        </v-btn>
-      </template>
+        )
+          v-icon mdi-translate
+          v-icon mdi-chevron-down
 
-      <v-list>
-        <v-list-item
+      v-list
+        v-list-item(
           v-for="lang in langs"
           :key="lang"
           @click="setLanguage(lang)"
-        >
-          <v-list-item-title>{{ lang }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
-    <v-btn
+        )
+          v-list-item-title {{ lang }}
+    v-btn(
       v-if="user"
       icon
       @click="logout"
-    >
-      <v-icon>mdi-logout</v-icon>
-    </v-btn>
-  </v-app-bar>
+    )
+      v-icon mdi-logout
 </template>
 <script>
 import { mapState } from 'vuex'

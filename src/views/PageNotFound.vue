@@ -1,5 +1,5 @@
 <template>
-  <h1>Esta pagina no existe</h1>
+  <h1>{{ $t('Esta pagina no existe') }}</h1>
 </template>
 <script>
 import { mapState } from 'vuex'

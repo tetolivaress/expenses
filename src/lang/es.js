@@ -14,5 +14,7 @@ export default {
   addNewCategory: 'Añadir Nueva Categoría',
   expenses: 'Gastos',
   incomes: 'Ingresos',
-  investments: 'Inversiones'
+  investments: 'Inversiones',
+  about: 'Esta es la página Acerca de',
+  notFound: 'Esta pagina no existe'
 }

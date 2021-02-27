@@ -1,48 +1,40 @@
-<template>
-  <v-container>
-    <v-row justify="center">
-      <v-col cols="10" md="6">
-        <v-form
+<template lang="pug">
+  v-container
+    v-row(justify="center")
+      v-col(cols="10" md="6")
+        v-form(
           ref="form"
           v-model="valid"
           lazy-validation
-        >
-          <br>
-          <br>
-          <br>
-          <v-text-field
+        )
+          br
+          br
+          br
+          v-text-field(
             v-model="email"
             :rules="emailRules"
             label="E-mail"
             required
-          ></v-text-field>
+          )
 
-          <v-text-field
+          v-text-field(
             v-model="password"
             :label="$t('password')"
             required
-          ></v-text-field>
-        </v-form>
-      </v-col>
-    </v-row>
-    <v-row justify="center">
-      <v-btn
+          )
+    v-row(justify="center")
+      v-btn(
         :disabled="!valid"
         color="success"
         class="mr-4"
         @click="signUserUp({email, password})"
-      >
-        {{ $t('signUp') }}
-      </v-btn>
-      <router-link to="/login">
-        <v-btn
+      )
+        | {{ $t('signUp') }}
+      router-link(to="/login")
+        v-btn(
           color="red"
-        >
-          {{ $t('login') }}
-        </v-btn>
-      </router-link>
-    </v-row>
-  </v-container>
+        )
+          | {{ $t('login') }}
 </template>
 
 <script>

@@ -1,7 +1,7 @@
-<template>
-  <v-app>
-    <div id="app">
-      <v-app-bar
+<template lang="pug">
+  v-app
+    div#app
+      v-app-bar(
         absolute
         color="indigo darken-2"
         dark
@@ -9,75 +9,60 @@
         prominent
         scroll-target="#scrolling-techniques"
         src="@/assets/background.jpg"
-      >
-        <template v-slot:img="{ props }">
-          <v-img
+      )
+        template(v-slot:img="{ props }")
+          v-img(
             v-bind="props"
             gradient="to top right, rgba(36,113,163,.65), rgba(33,97,140,.65)"
-          ></v-img>
-        </template>
-        <v-icon color="blue" class="mx-4">mdi-minus-circle</v-icon>
-        <v-toolbar-title v-if="spent">{{ spent }}$: {{ $t('spentIn', { month: moment().format('MMMM') }) }}</v-toolbar-title>
-        <v-toolbar-title v-else>Gastos</v-toolbar-title>
+          )
+        v-icon(color="blue" class="mx-4") mdi-minus-circle
+        v-toolbar-title(v-if="spent") {{ spent }}$: {{ $t('spentIn', { month: moment().format('MMMM') }) }}
+        v-toolbar-title(v-else) {{$t('expenses')}}
 
-        <v-spacer></v-spacer>
+        v-spacer
 
-        <v-menu
+        v-menu(
           offset-y
-          >
-          <template v-slot:activator="{ on, attrs }">
-            <v-btn
+        )
+          template(v-slot:activator="{ on, attrs }")
+            v-btn(
               icon
               v-bind="attrs"
               v-on="on"
-            >
-              <v-icon>mdi-translate</v-icon>
-              <v-icon>mdi-chevron-down</v-icon>
-            </v-btn>
-          </template>
+            )
+              v-icon(color="white") mdi-translate
+              v-icon(color="white") mdi-chevron-down
 
-          <v-list>
-            <v-list-item
+          v-list
+            v-list-item(
               v-for="lang in langs"
               :key="lang"
               @click="setLanguage(lang)"
-            >
-              <v-list-item-title>{{ lang }}</v-list-item-title>
-            </v-list-item>
-          </v-list>
-        </v-menu>
+            )
+              v-list-item-title {{ lang }}
 
-        <v-btn
+        v-btn(
           v-if="user.user"
           icon
           @click="logout"
-        >
-          <v-icon>mdi-logout</v-icon>
-        </v-btn>
-        <template v-slot:extension>
-          <v-tabs v-if="user.user" align-with-title class="d-none d-md-block">
-            <router-link to="/">
-              <v-tab>{{ $t('expenses') }}</v-tab>
-            </router-link>
-            <router-link to="/income">
-              <v-tab>{{ $t('incomes') }}</v-tab>
-            </router-link>
-            <router-link to="/investment">
-              <v-tab>{{ $t('investments') }}</v-tab>
-            </router-link>
-          </v-tabs>
-        </template>
-      </v-app-bar>
-      <v-sheet
+        )
+          v-icon mdi-logout
+        template(v-slot:extension)
+          v-tabs(v-if="user.user" align-with-title class="d-none d-md-block")
+            router-link(to="/")
+              v-tab {{ $t("expenses") }}
+            router-link(to="/income")
+              v-tab {{ $t("incomes") }}
+            router-link(to="/investment")
+              v-tab {{ $t("investments") }}
+      v-sheet(
         id="scrolling-techniques"
         class="overflow-y-auto mt-16"
         max-height="90vh"
-      >
-        <div class="mt-16 pt-16">
-          <router-view class="mt-8"/>
-        </div>
-      </v-sheet>
-      <v-bottom-navigation
+      )
+        div(class="mt-16 pt-16")
+          router-view(class="mt-8")
+      v-bottom-navigation(
         v-if="user.user"
         class="d-md-none"
         absolute
@@ -86,42 +71,31 @@
         horizontal
         scroll-target="#scroll-threshold-example"
         scroll-threshold="500"
-      >
-        <router-link to="/">
-          <v-btn>
-            <span>{{$t('expenses')}}</span>
+      )
+        router-link(to="/")
+          v-btn
+            span {{ $t("expenses") }}
 
-            <v-icon>mdi-history</v-icon>
-          </v-btn>
-        </router-link>
+            v-icon mdi-history
+        router-link(to="/income")
+          v-btn
+            span {{ $t("incomes") }}
 
-        <router-link to="/income">
-          <v-btn>
-            <span>{{$t('incomes')}}</span>
+            v-icon mdi-heart
 
-            <v-icon>mdi-heart</v-icon>
-          </v-btn>
-        </router-link>
+        router-link(to="/investment")
+          v-btn
+            span {{ $t("investments") }}
 
-        <router-link to="/investment">
-          <v-btn>
-            <span>{{$t('investments')}}</span>
-
-            <v-icon>mdi-map-marker</v-icon>
-          </v-btn>
-        </router-link>
-      </v-bottom-navigation>
-    </div>
-    <v-overlay
+            v-icon mdi-map-marker
+    v-overlay(
       :absolute="true"
       :value="loading.isLoading"
-    >
-      <v-progress-circular
+    )
+      v-progress-circular(
         indeterminate
         color="red"
-      ></v-progress-circular>
-    </v-overlay>
-  </v-app>
+      )
 </template>
 
 <script>

@@ -14,5 +14,7 @@ export default {
   addNewCategory: 'Add New Category',
   expenses: 'Expenses',
   incomes: 'Incomes',
-  investments: 'Investments'
+  investments: 'Investments',
+  about: 'This is an about page',
+  notFound: 'This page does not exist'
 }

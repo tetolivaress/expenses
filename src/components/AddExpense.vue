@@ -1,10 +1,10 @@
-<template>
-  <v-dialog
+<template lang="pug">
+  v-dialog(
     v-model="newExpense"
     width="500"
-  >
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn
+  )
+    template(v-slot:activator="{ on, attrs }")
+      v-btn(
         v-bind="attrs"
         v-on="on"
         fab
@@ -15,35 +15,29 @@
         fixed
         color="primary"
         class="mb-12"
-      >
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-    </template>
-    <v-card>
-      <v-card-title class="headline grey lighten-2">
-        <v-date-picker
+      )
+        v-icon mdi-plus
+    v-card
+      v-card-title(class="headline grey lighten-2")
+        v-date-picker(
           v-model="picker"
           v-if="openDatePicker"
           @input="openDatePicker = !openDatePicker, date = $event"
-        ></v-date-picker>
-        <div v-else @click="openDatePicker = !openDatePicker">
-          {{ date ? moment(date).format('DD - MMMM') : moment().format('DD - MMMM') }}
-        </div>
-        <v-icon
+        )
+        div(v-else @click="openDatePicker = !openDatePicker")
+        | {{ date ? moment(date).format('DD - MMMM') : moment().format('DD - MMMM') }}
+        v-icon(
           color="green"
           class="mx-6"
           @click="openDatePicker = !openDatePicker"
           v-if="!openDatePicker"
-        >
-          mdi-circle-edit-outline
-        </v-icon>
-      </v-card-title>
+        ) mdi-circle-edit-outline
 
-      <v-divider></v-divider>
+      v-divider
 
-      <v-form v-show="!openDatePicker" @input="formHasError = $event">
-        <v-container>
-          <v-select
+      v-form(v-show="!openDatePicker" @input="formHasError = $event")
+        v-container
+          v-select(
             :hint="`${filteredCategories.name}, ${filteredCategories.id}`"
             :items="filteredCategories"
             item-text="name"
@@ -51,33 +45,27 @@
             :label="$t('category')"
             solo
             v-model="selectedCategory"
-          >
-            <template v-slot:append-outer>
-              <router-link to="/category">
-                <v-icon>
-                  mdi-circle-edit-outline
-                </v-icon>
-              </router-link>
-            </template>
-          </v-select>
-          <v-row>
-            <v-col
+          )
+            template(v-slot:append-outer)
+              router-link(to="/category")
+                v-icon mdi-circle-edit-outline
+          v-row
+            v-col(
               cols="12"
               md="8"
-            >
-              <v-text-field
+            )
+              v-text-field(
                 v-model="description"
                 :label="$t('description')"
                 required
                 solo
-              ></v-text-field>
-            </v-col>
+              )
 
-            <v-col
+            v-col(
               cols="12"
               md="4"
-            >
-              <v-text-field
+            )
+              v-text-field(
                 v-model="amount"
                 :label="$t('amount')"
                 required
@@ -85,25 +73,17 @@
                 :rules="[numberRule]"
                 @update:error="formError = true"
                 @change="formError = false"
-              ></v-text-field>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-form>
+              )
 
-      <v-card-actions v-if="formHasError">
-        <v-spacer></v-spacer>
-        <v-btn
+      v-card-actions(v-if="formHasError")
+        v-spacer
+        v-btn(
           color="primary"
           text
           v-if="!openDatePicker"
           @click="addExpense({ description, amount, userId: user.id, date: picker, categoryId: selectedCategory }), newExpense = false, description = '', amount = ''"
-        >
-          {{ $t('add') }}
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
+        )
+          | {{ $t('add') }}
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
