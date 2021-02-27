@@ -11,5 +11,8 @@ export default {
   password: 'Contraseña',
   signUp: 'Regístrate',
   logIn: 'Accede',
-  addNewCategory: 'Añadir Nueva Categoría'
+  addNewCategory: 'Añadir Nueva Categoría',
+  expenses: 'Gastos',
+  incomes: 'Ingresos',
+  investments: 'Inversiones'
 }

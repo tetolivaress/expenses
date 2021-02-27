@@ -57,13 +57,13 @@
         <template v-slot:extension>
           <v-tabs v-if="user.user" align-with-title class="d-none d-md-block">
             <router-link to="/">
-              <v-tab>Expenses</v-tab>
+              <v-tab>{{ $t('expenses') }}</v-tab>
             </router-link>
             <router-link to="/income">
-              <v-tab>Incomes</v-tab>
+              <v-tab>{{ $t('incomes') }}</v-tab>
             </router-link>
             <router-link to="/investment">
-              <v-tab>Investments</v-tab>
+              <v-tab>{{ $t('investments') }}</v-tab>
             </router-link>
           </v-tabs>
         </template>
@@ -89,7 +89,7 @@
       >
         <router-link to="/">
           <v-btn>
-            <span>Expenses</span>
+            <span>{{$t('expenses')}}</span>
 
             <v-icon>mdi-history</v-icon>
           </v-btn>
@@ -97,7 +97,7 @@
 
         <router-link to="/income">
           <v-btn>
-            <span>Incomes</span>
+            <span>{{$t('incomes')}}</span>
 
             <v-icon>mdi-heart</v-icon>
           </v-btn>
@@ -105,7 +105,7 @@
 
         <router-link to="/investment">
           <v-btn>
-            <span>Investments</span>
+            <span>{{$t('investments')}}</span>
 
             <v-icon>mdi-map-marker</v-icon>
           </v-btn>
