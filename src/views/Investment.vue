@@ -1,5 +1,4 @@
-<template>
-  <div class="about">
-    <h1>{{ $('Investiments') }}</h1>
-  </div>
+<template lang="pug">
+  div(class="about")
+    h1 {{ $('Investiments') }}
 </template>

@@ -1,8 +1,7 @@
-<template>
-  <div class="home">
-    <CategoryList/>
-    <AddCategory/>
-  </div>
+<template lang="pug">
+  div(class="home")
+    CategoryList
+    AddCategory
 </template>
 
 <script>
