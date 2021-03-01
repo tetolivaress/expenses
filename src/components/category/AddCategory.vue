@@ -18,7 +18,7 @@
         v-icon mdi-plus
     v-card
       v-card-title(class="headline grey lighten-2")
-        {{ $t('addNewCategory') }}
+        | {{ $t('addNewCategory') }}
 
       v-divider
 
@@ -38,7 +38,7 @@
           @click="addCategory(name)"
           v-if="!category.categories.filter(category => category.name == name).length"
         )
-          {{ $t('add') }}
+          | {{ $t('add') }}
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'

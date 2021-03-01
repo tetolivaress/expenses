@@ -16,7 +16,7 @@
             gradient="to top right, rgba(36,113,163,.65), rgba(33,97,140,.65)"
           )
         v-icon(color="blue" class="mx-4") mdi-minus-circle
-        v-toolbar-title(v-if="spent") {{ spent }}$: {{ $t('spentIn', { month: moment().format('MMMM') }) }}
+        v-toolbar-title(v-if="spent") {{ spent }}$: {{ $t('spentIn', { month: $moment().format('MMMM') }) }}
         v-toolbar-title(v-else) {{$t('expenses')}}
 
         v-spacer
@@ -72,22 +72,19 @@
         scroll-target="#scroll-threshold-example"
         scroll-threshold="500"
       )
-        router-link(to="/")
-          v-btn
-            span {{ $t("expenses") }}
+        v-btn(to="/")
+          span {{ $t("expenses") }}
 
-            v-icon mdi-history
-        router-link(to="/income")
-          v-btn
-            span {{ $t("incomes") }}
+          v-icon mdi-history
+        v-btn(to="/income")
+          span {{ $t("incomes") }}
 
-            v-icon mdi-heart
+          v-icon mdi-heart
 
-        router-link(to="/investment")
-          v-btn
-            span {{ $t("investments") }}
+        v-btn(to="/investment")
+          span {{ $t("investments") }}
 
-            v-icon mdi-map-marker
+          v-icon mdi-map-marker
     v-overlay(
       :absolute="true"
       :value="loading.isLoading"
@@ -100,7 +97,6 @@
 
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
-// import moment from 'moment'
 
 export default {
   name: 'App',
@@ -109,7 +105,7 @@ export default {
     amount: 0,
     newExpense: false,
     selectedExpense: 0,
-    langs: ['en', 'es']
+    langs: ['es', 'en']
   }),
   computed: mapState({
     ...mapState(['expenses', 'loading', 'user']),
@@ -125,10 +121,10 @@ export default {
     },
     setLanguage (lang) {
       this.$i18n.locale = lang
-      moment.locale(lang)
+      this.$moment.locale(lang)
     },
     moment (date) {
-      return date ? moment(date) : moment()
+      return date ? this.$moment(date) : this.$moment()
     }
   }
 }

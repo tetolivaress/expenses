@@ -25,7 +25,7 @@
           @input="openDatePicker = !openDatePicker, date = $event"
         )
         div(v-else @click="openDatePicker = !openDatePicker")
-        | {{ date ? moment(date).format('DD - MMMM') : moment().format('DD - MMMM') }}
+        | {{ date ? $moment(date).format('DD - MMMM') : $moment().format('DD - MMMM') }}
         v-icon(
           color="green"
           class="mx-6"
@@ -87,7 +87,6 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
-import moment from 'moment'
 export default {
   name: 'AddExpense',
 
@@ -126,7 +125,7 @@ export default {
       this.$store.commit('loading/SET_LOADING', false, { root: true })
     },
     moment (date) {
-      return date ? moment(date) : moment()
+      return date ? this.$moment(date) : this.$moment()
     }
   }
 }

@@ -13,7 +13,7 @@
         v-icon mdi-circle-edit-outline
     v-card
       v-card-title(class="headline grey lighten-2")
-        {{ $t('addNewCategory') }}
+        | {{ $t('addNewCategory') }}
 
       v-divider
 
@@ -32,7 +32,7 @@
           text
           @click="updateCategory(newName)"
         )
-          {{ $t('add') }}
+          | {{ $t('add') }}
 </template>
 <script>
 import { mapActions } from 'vuex'

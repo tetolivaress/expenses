@@ -35,7 +35,7 @@
                 v-list-item-content(@click="selectedExpense = expense, openModal = true")
                   v-list-item-title(v-text="expense.description")
                   v-list-item-subtitle(v-text="expense.amount")
-                  v-list-item-subtitle(v-text="moment(expense.date).format('dddd D MMMM YYYY')")
+                  v-list-item-subtitle(v-text="$moment(expense.date).format('dddd D MMMM YYYY')")
                 v-list-item-action
                   v-btn(icon @click="removeExpense(expense)")
                     v-icon(color="red lighten-1") mdi-close
@@ -69,7 +69,7 @@
                 v-list-item-content(@click="selectedExpense = expense, openModal = true")
                   v-list-item-title(v-text="expense.description")
                   v-list-item-subtitle(v-text="expense.amount")
-                  v-list-item-subtitle(v-text="moment(expense.date).format('dddd D MMMM YYYY')")
+                  v-list-item-subtitle(v-text="$moment(expense.date).format('dddd D MMMM YYYY')")
                 v-list-item-action
                   v-btn(icon @click="removeExpense(expense)")
                     v-icon( color="red lighten-1") mdi-close
@@ -85,7 +85,7 @@
             @input="openDatePicker = !openDatePicker, selectedExpense.date = $event"
           )
           div(v-else @click="openDatePicker = !openDatePicker")
-            | {{ selectedExpense.date ? moment(selectedExpense.date).format('DD - MMMM') : moment().format('DD - MMMM') }}
+            | {{ selectedExpense.date ? $moment(selectedExpense.date).format('DD - MMMM') : $moment().format('DD - MMMM') }}
           v-icon(
             color="green"
             class="mx-6"
@@ -141,7 +141,6 @@
 </template>
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
-import moment from 'moment'
 
 export default {
   data () {
@@ -178,7 +177,7 @@ export default {
         : false
     },
     moment (date) {
-      return date ? moment(date) : moment()
+      return date ? this.$moment(date) : this.$moment()
     }
   },
   async created () {

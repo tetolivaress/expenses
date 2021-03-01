@@ -36,7 +36,6 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import moment from 'moment'
 export default {
   computed: {
     ...mapState(['user'])
@@ -53,7 +52,7 @@ export default {
     },
     setLanguage (lang) {
       this.$i18n.locale = lang
-      moment.locale(lang)
+      this.$moment.locale(lang)
     }
   }
 }
