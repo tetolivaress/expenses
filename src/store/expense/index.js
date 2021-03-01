@@ -19,7 +19,7 @@ export default {
     spent: ({ expenses, selectedDate }) => {
       return expenses.length
         ? expenses
-          .filter(expense => moment(selectedDate).format('MM') === moment(expense.date).format('MM'))
+          .filter(expense => moment(selectedDate).month() === moment(expense.date).month())
           .map(expense => Number(expense.amount))
           .reduce((acc, current) => acc + current)
           .toFixed(2)
@@ -28,13 +28,13 @@ export default {
     sortedExpenses: ({ expenses, selectedDate }, { spent }, rootState) => {
       return rootState.category.categories.map(category => {
         return {
-          expenses: expenses.filter(expense => category.id === expense.categoryId && moment(selectedDate).format('MM') === moment(expense.date).format('MM')),
+          expenses: expenses.filter(expense => category.id === expense.categoryId && moment(selectedDate).month() === moment(expense.date).month()),
           category: category.name
         }
       })
     },
     withoutCategory: ({ expenses }) => expenses.filter(expense => !expense.categoryId),
-    months: ({ expenses }) => [...new Set(expenses.map(({ date }) => moment(date).format('MMMM')))]
+    months: ({ expenses }) => [...new Set(expenses.map(({ date }) => moment(date).format('MMMM YYYY')))]
   },
   actions: {
     bindExpenses: firestoreAction(async ({ bindFirestoreRef, commit }) => {
