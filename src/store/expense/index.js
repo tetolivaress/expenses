@@ -8,32 +8,33 @@ export default {
   namespaced: true,
   state: {
     expenses: [],
-    currentMonth: moment().format('MMMM')
+    selectedDate: moment() // .subtract(1, 'months').endOf('month').format('MM')
   },
   mutations: {
-    CHANGE_MONTH ({ currentMonth }, payload) {
-      currentMonth = payload
+    CHANGE_MONTH ({ selectedDate }, payload) {
+      selectedDate = payload
     }
   },
   getters: {
-    spent: ({ expenses }) => {
+    spent: ({ expenses, selectedDate }) => {
       return expenses.length
         ? expenses
+          .filter(expense => moment(selectedDate).month() === moment(expense.date).month())
           .map(expense => Number(expense.amount))
           .reduce((acc, current) => acc + current)
           .toFixed(2)
         : 0
     },
-    sortedExpenses: ({ expenses }, { spent }, rootState) => {
+    sortedExpenses: ({ expenses, selectedDate }, { spent }, rootState) => {
       return rootState.category.categories.map(category => {
         return {
-          expenses: expenses.filter(expense => category.id === expense.categoryId),
+          expenses: expenses.filter(expense => category.id === expense.categoryId && moment(selectedDate).month() === moment(expense.date).month()),
           category: category.name
         }
       })
     },
     withoutCategory: ({ expenses }) => expenses.filter(expense => !expense.categoryId),
-    months: ({ expenses }) => [...new Set(expenses.map(({ date }) => moment(date).format('MMMM')))]
+    months: ({ expenses }) => [...new Set(expenses.map(({ date }) => moment(date).format('MMMM YYYY')))]
   },
   actions: {
     bindExpenses: firestoreAction(async ({ bindFirestoreRef, commit }) => {
