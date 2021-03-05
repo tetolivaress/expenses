@@ -18,6 +18,12 @@
         v-icon(color="blue" class="mx-4") mdi-minus-circle
         v-toolbar-title(v-if="spent") {{ spent }}$: {{ $t('spentIn', { month: $moment().format('MMMM') }) }}
         v-toolbar-title(v-else) {{$t('expenses')}}
+        v-select(
+          :items="months"
+          label="Standard"
+          solo
+          @input="changeMonth($event)"
+        )
 
         v-spacer
 
@@ -110,7 +116,8 @@ export default {
   computed: mapState({
     ...mapState(['expenses', 'loading', 'user']),
     ...mapGetters({
-      spent: 'expense/spent'
+      spent: 'expense/spent',
+      months: 'expense/months'
     })
   }),
   methods: {
@@ -122,6 +129,9 @@ export default {
     setLanguage (lang) {
       this.$i18n.locale = lang
       this.$moment.locale(lang)
+    },
+    changeMonth (month) {
+      this.$store.commit('expense/CHANGE_MONTH', 'asd')
     },
     moment (date) {
       return date ? this.$moment(date) : this.$moment()
