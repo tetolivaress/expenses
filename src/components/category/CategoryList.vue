@@ -3,6 +3,7 @@
     subheader
     two-line
   )
+    <v-subheader inset>{{ $t('categories') }}</v-subheader>
     v-list-item(
       v-for="(category, i) in categories"
       :key="i"
@@ -29,6 +30,11 @@ import EditCategory from '@/components/category/EditCategory'
 export default {
   components: {
     EditCategory
+  },
+  data () {
+    return {
+      openModal: false
+    }
   },
   computed: {
     ...mapState({

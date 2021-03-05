@@ -1,6 +1,8 @@
 export default {
   add: 'Add',
+  edit: 'Edit',
   category: 'Category',
+  categories: 'Categories',
   description: 'Description',
   amount: 'Amount',
   spentIn: 'Spent in {month}',
@@ -12,6 +14,7 @@ export default {
   signUp: 'SignUp',
   logIn: 'Login',
   addNewCategory: 'Add New Category',
+  editCategory: 'Edit Category',
   expenses: 'Expenses',
   incomes: 'Incomes',
   investments: 'Investments',

@@ -12,14 +12,13 @@
       )
         v-icon mdi-circle-edit-outline
     v-card
-      v-card-title(class="headline grey lighten-2")
-        | {{ $t('addNewCategory') }}
+      v-card-title(class="headline grey lighten-2") {{ $t('editCategory') }}
 
       v-divider
 
       v-form
         v-text-field(
-          v-model="newName"
+          v-model="category.name"
           label="Name"
           required
           solo
@@ -30,9 +29,9 @@
         v-btn(
           color="primary"
           text
-          @click="updateCategory(newName)"
+          @click="updateCategory({id: category.id, name: category.name})"
         )
-          | {{ $t('add') }}
+          | {{ $t('edit') }}
 </template>
 <script>
 import { mapActions } from 'vuex'
@@ -40,13 +39,13 @@ export default {
   props: ['category'],
   data () {
     return {
-      editCategory: false,
-      newName: ''
+      newName: '',
+      editCategory: false
     }
   },
   watch: {
-    category (newName) {
-      this.newName = newName
+    category ({ name }) {
+      this.newName = name
     }
   },
   methods: {

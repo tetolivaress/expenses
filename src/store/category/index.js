@@ -31,7 +31,7 @@ export default {
     }),
     updateCategory: firestoreAction(({ commit }, { id, name }) => {
       console.log(id, name)
-      db.collection('expencategorises')
+      db.collection('categories')
         .doc(id)
         .update({ name })
         .then(() => {
