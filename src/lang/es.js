@@ -1,6 +1,8 @@
 export default {
   add: 'Añadir',
+  edit: 'Editar',
   category: 'Categoría',
+  categories: 'Categorías',
   description: 'Descripción',
   amount: 'Monto',
   spentIn: 'Gastos de {month}',
@@ -12,6 +14,7 @@ export default {
   signUp: 'Regístrate',
   logIn: 'Accede',
   addNewCategory: 'Añadir Nueva Categoría',
+  editCategory: 'Editar Categoría',
   expenses: 'Gastos',
   incomes: 'Ingresos',
   investments: 'Inversiones',

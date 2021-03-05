@@ -21,7 +21,7 @@
                   color="red"
                   :content="withoutCategory.length"
                 )
-                |  {{ $t('noCategory') }} - {{ spentCategory(withoutCategory) }}
+                  |  {{ $t('noCategory') }} - {{ spentCategory(withoutCategory) }}
             template(v-if="withoutCategory.length")
               v-list-item(
                 v-for="(expense, j) in withoutCategory"
@@ -137,7 +137,7 @@
             text
             @click="updateExpense(selectedExpense), openModal = false"
           )
-          |  {{ $t('update') }}
+            |  {{ $t('update') }}
 </template>
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'

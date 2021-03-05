@@ -3,6 +3,7 @@
     subheader
     two-line
   )
+    <v-subheader inset>{{ $t('categories') }}</v-subheader>
     v-list-item(
       v-for="(category, i) in categories"
       :key="i"
@@ -12,7 +13,7 @@
           class="grey lighten-1"
           dark
         )
-          mdi-folder
+          | mdi-folder
 
       v-list-item-content
         v-list-item-title(v-text="category.name")
@@ -29,6 +30,11 @@ import EditCategory from '@/components/category/EditCategory'
 export default {
   components: {
     EditCategory
+  },
+  data () {
+    return {
+      openModal: false
+    }
   },
   computed: {
     ...mapState({

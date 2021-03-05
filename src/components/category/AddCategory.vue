@@ -13,6 +13,7 @@
         bottom
         right
         fixed
+        class="mb-12"
         color="primary"
       )
         v-icon mdi-plus
