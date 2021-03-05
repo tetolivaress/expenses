@@ -12,7 +12,7 @@
           class="grey lighten-1"
           dark
         )
-          mdi-folder
+          | mdi-folder
 
       v-list-item-content
         v-list-item-title(v-text="category.name")

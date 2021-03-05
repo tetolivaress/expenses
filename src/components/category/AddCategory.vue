@@ -36,7 +36,7 @@
           color="primary"
           text
           @click="addCategory(name)"
-          v-if="!category.categories.filter(category => category.name == name).length"
+          v-if="!category.categories.filter(category => category.name.toLowerCase() == name.toLowerCase()).length"
         )
           | {{ $t('add') }}
 </template>
