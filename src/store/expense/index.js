@@ -12,8 +12,8 @@ export default {
     selectedMonth: moment().format('MM - YYYY')
   },
   mutations: {
-    CHANGE_MONTH ({ selectedMonth }, payload) {
-      selectedMonth = payload
+    CHANGE_MONTH (state, payload) {
+      state.selectedMonth = payload
     }
   },
   getters: {
