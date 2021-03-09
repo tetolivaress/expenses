@@ -18,6 +18,13 @@
         v-icon(color="blue" class="mx-4") mdi-minus-circle
         v-toolbar-title(v-if="spent") {{ spent }}$: {{ $t('spentIn', { month: $moment().format('MMMM') }) }}
         v-toolbar-title(v-else) {{$t('expenses')}}
+        v-select(
+          v-if="months.length"
+          :items="months"
+          label="Standard"
+          solo
+          @input="CHANGE_MONTH($event)"
+        )
 
         v-spacer
 
@@ -96,7 +103,7 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapActions, mapGetters, mapMutations } from 'vuex'
 
 export default {
   name: 'App',
@@ -110,11 +117,15 @@ export default {
   computed: mapState({
     ...mapState(['expenses', 'loading', 'user']),
     ...mapGetters({
-      spent: 'expense/spent'
+      spent: 'expense/spent',
+      months: 'expense/months'
     })
   }),
   methods: {
     ...mapActions(['removeExpense', 'updateExpense']),
+    ...mapMutations({
+      CHANGE_MONTH: 'expense/CHANGE_MONTH'
+    }),
     logout () {
       this.$store.dispatch('user/logout')
         .then(() => this.$router.push({ path: '/login' }))
