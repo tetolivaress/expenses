@@ -19,5 +19,9 @@ export default {
   incomes: 'Ingresos',
   investments: 'Inversiones',
   about: 'Esta es la página Acerca de',
-  notFound: 'Esta pagina no existe'
+  notFound: 'Esta pagina no existe',
+  validations: {
+    required: 'El campo {field} no debe estar vacío',
+    range: '{field} has to be between {min} and {max}'
+  }
 }

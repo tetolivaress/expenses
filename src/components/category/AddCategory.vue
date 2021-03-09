@@ -23,12 +23,13 @@
 
       v-divider
 
-      v-form
+      v-form(ref="form")
         v-text-field(
           v-model="name"
           label="Name"
           required
           solo
+          :rules="[nameRule]"
         )
 
       v-card-actions
@@ -37,7 +38,7 @@
           color="primary"
           text
           @click="addCategory(name)"
-          v-if="!category.categories.filter(category => category.name.toLowerCase() == name.toLowerCase()).length"
+          v-if="!categoryExists"
         )
           | {{ $t('add') }}
 </template>
@@ -50,14 +51,25 @@ export default {
     newCategory: false
   }),
   computed: {
-    ...mapState(['category'])
+    ...mapState(['category']),
+    nameRule () {
+      return v => !v.length ? this.$t('validations.required', { field: 'Name' }) : true
+    },
+    categoryExists () {
+      return this.category.categories.filter(category => category.name.toLowerCase() === this.name.toLowerCase()).length
+    }
   },
   methods: {
     ...mapActions(['category/addCategory']),
     async addCategory (category) {
-      await this['category/addCategory'](category)
-      this.newCategory = false
-      this.$store.commit('loading/SET_LOADING', false, { root: true })
+      if (this.$refs.form.validate()) {
+        await this['category/addCategory'](category)
+        this.newCategory = false
+        this.$store.commit('loading/SET_LOADING', false, { root: true })
+      }
+    },
+    validate () {
+      console.log(this.$refs.form.validate())
     }
   }
 }
