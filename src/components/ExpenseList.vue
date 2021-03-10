@@ -170,11 +170,10 @@ export default {
   methods: {
     ...mapActions('expense', ['removeExpense', 'updateExpense']),
     spentCategory (expenses) {
-      return expenses.length
-        ? expenses
-          .map(expense => Number(expense.amount))
-          .reduce((acc, current) => acc + current)
-        : false
+      return expenses
+        .map(expense => Number(expense.amount))
+        .reduce((acc, current) => acc + current, 0)
+        .toFixed(2)
     },
     moment (date) {
       return date ? this.$moment(date) : this.$moment()
