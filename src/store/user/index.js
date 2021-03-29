@@ -106,6 +106,7 @@ export default {
       commit('SHOW_LOADING')
       firebase.auth().signOut()
       commit('setUser', null)
+      commit('expense/RESET', null, { root: true })
       // router.push({ path: '/login' })
     }
   },
