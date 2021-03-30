@@ -19,8 +19,11 @@
         v-toolbar-title(v-if="spent") {{ spent }}$: {{ $t('spentIn', { month: $moment().format('MMMM') }) }}
         v-toolbar-title(v-else) {{$t('expenses')}}
         v-select(
+          :hint="`${months.name}, ${months.id}`"
           v-if="months.length"
           :items="months"
+          item-text="name"
+          item-value="id"
           label="Standard"
           solo
           @input="CHANGE_MONTH($event)"
