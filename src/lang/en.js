@@ -5,6 +5,7 @@ export default {
   categories: 'Categories',
   description: 'Description',
   amount: 'Amount',
+  number: 'Number',
   spentIn: 'Spent in {month}',
   noCategory: 'Without Category',
   update: 'Update',

@@ -5,6 +5,7 @@ export default {
   categories: 'Categorías',
   description: 'Descripción',
   amount: 'Monto',
+  number: 'Number',
   spentIn: 'Gastos de {month}',
   noCategory: 'Sin Categoría',
   update: 'Actualizar',
@@ -22,6 +23,6 @@ export default {
   notFound: 'Esta pagina no existe',
   validations: {
     required: 'El campo {field} no debe estar vacío',
-    range: '{field} has to be between {min} and {max}'
+    range: '{field} tiene que estar entre {min} y {max}'
   }
 }

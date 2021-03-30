@@ -16,15 +16,16 @@
 
       v-divider
 
-      v-form
+      v-form(@input="formHasError = $event")
         v-text-field(
           v-model="category.name"
           label="Name"
           required
+          :rules="[nameRule]"
           solo
         )
 
-      v-card-actions
+      v-card-actions(v-if="formHasError")
         v-spacer
         v-btn(
           color="primary"
@@ -40,7 +41,13 @@ export default {
   data () {
     return {
       newName: '',
-      editCategory: false
+      editCategory: false,
+      formHasError: true
+    }
+  },
+  computed: {
+    nameRule () {
+      return v => !v.length ? this.$t('validations.required', { field: 'Name' }) : true
     }
   },
   watch: {

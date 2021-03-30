@@ -23,7 +23,7 @@
 
       v-divider
 
-      v-form(ref="form")
+      v-form(ref="form" @input="formHasError = $event")
         v-text-field(
           v-model="name"
           label="Name"
@@ -32,7 +32,7 @@
           :rules="[nameRule]"
         )
 
-      v-card-actions
+      v-card-actions(v-if="formHasError")
         v-spacer
         v-btn(
           color="primary"
@@ -48,7 +48,8 @@ export default {
   name: 'AddCategory',
   data: () => ({
     name: '',
-    newCategory: false
+    newCategory: false,
+    formHasError: true
   }),
   computed: {
     ...mapState(['category']),
