@@ -164,7 +164,7 @@ export default {
     ...mapGetters({
       sortedExpenses: 'expense/sortedExpenses',
       withoutCategory: 'expense/withoutCategory',
-      spent: 'expense/spent'
+      invested: 'expense/invested'
     })
   },
   methods: {
