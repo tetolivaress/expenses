@@ -35,7 +35,7 @@
 
       v-divider
 
-      v-form(v-show="!openDatePicker" @input="formHasError = $event")
+      v-form(v-show="!openDatePicker" @input="formHasError = $event" ref="expenseForm")
         v-container
           v-select(
             :hint="`${filteredCategories.name}, ${filteredCategories.id}`"
@@ -59,6 +59,7 @@
                 :label="$t('description')"
                 required
                 solo
+                :rules="[nameRule]"
               )
 
             v-col(
@@ -70,7 +71,7 @@
                 :label="$t('amount')"
                 required
                 solo
-                :rules="[numberRule]"
+                :rules="[requiredRule, rangeRule, numberRule]"
                 @update:error="formError = true"
                 @change="formError = false"
               )
@@ -99,12 +100,12 @@ export default {
     picker: new Date().toISOString().substr(0, 10),
     description: '',
     amount: '',
-    newExpense: false,
-    numberRule: v => {
-      if (!v.trim()) return true
-      if (!isNaN(parseFloat(v)) && v >= 0 && v <= 999999999) return true
-      return 'Number has to be between 0 and 999999999'
-    }
+    newExpense: false
+    // numberRule: v => {
+    //   if (!v.trim()) return true
+    //   if (!isNaN(parseFloat(v)) && v >= 0 && v <= 999999999) return true
+    //   return 'Number has to be between 0 and 999999999'
+    // }
   }),
   computed: {
     ...mapState({
@@ -116,13 +117,27 @@ export default {
         (category) =>
           category.name.toLowerCase().indexOf(this.searchCategory.toLowerCase()) > -1
       )
+    },
+    nameRule () {
+      return v => !v.length ? this.$t('validations.required', { field: this.$t('description') }) : true
+    },
+    requiredRule () {
+      return v => !v.trim() ? this.$t('validations.required', { field: this.$t('amount') }) : true
+    },
+    numberRule () {
+      return v => isNaN(parseFloat(v)) ? this.$t('validations.range', { field: this.$t('amount'), min: 0, max: 999999999 }) : true
+    },
+    rangeRule () {
+      return v => !(v >= 0 && v <= 999999999) ? this.$t('validations.range', { field: this.$t('amount'), min: 0, max: 999999999 }) : true
     }
   },
   methods: {
     ...mapActions(['expense/addExpense']),
     async addExpense (expense) {
-      await this['expense/addExpense'](expense)
-      this.$store.commit('loading/SET_LOADING', false, { root: true })
+      if (this.$refs.expenseForm.validate()) {
+        await this['expense/addExpense'](expense)
+        this.$store.commit('loading/SET_LOADING', false, { root: true })
+      }
     },
     moment (date) {
       return date ? this.$moment(date) : this.$moment()
