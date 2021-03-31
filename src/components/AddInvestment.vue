@@ -45,7 +45,7 @@
               v-text-field(
                 v-model="description"
                 :label="$t('description')"
-                :rules="descriptionRules"
+                :rules="[nameRule]"
                 solo
               )
 
@@ -57,7 +57,7 @@
                 v-model="amount"
                 :label="$t('amount')"
                 solo
-                :rules="numberRules"
+                :rules="[requiredRule, rangeRule, numberRule]"
                 @update:error="formError = true"
                 @change="formError = false"
               )
@@ -92,23 +92,7 @@ export default {
     ...mapState({
       user: ({ user }) => user.user,
       categories: ({ category }) => category.categories
-    }),
-    filteredCategories () {
-      return this.categories.filter(
-        (category) =>
-          category.name.toLowerCase().indexOf(this.searchCategory.toLowerCase()) > -1
-      )
-    },
-    descriptionRules () {
-      return [v => !!v || this.$t('validations.required', { field: this.descriptionText })]
-    },
-    numberRules () {
-      return [
-        v => v.trim() || this.$t('validations.required', { field: this.amountText }),
-        v => !isNaN(parseFloat(v)) || this.$t('validations.range', { field: this.amountText, min: 0, max: 999999999 }),
-        v => (v >= 0 && v <= 999999999) || this.$t('validations.range', { field: this.amountText, min: 0, max: 999999999 })
-      ]
-    }
+    })
   },
   methods: {
     ...mapActions(['investment/addInvestment']),

@@ -88,9 +88,10 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
+import validationTextsMixin from '../mixins/validationTextsMixin'
 export default {
   name: 'AddExpense',
-
+  mixins: [validationTextsMixin],
   data: () => ({
     formHasError: true,
     selectedCategory: '',
@@ -101,11 +102,6 @@ export default {
     description: '',
     amount: '',
     newExpense: false
-    // numberRule: v => {
-    //   if (!v.trim()) return true
-    //   if (!isNaN(parseFloat(v)) && v >= 0 && v <= 999999999) return true
-    //   return 'Number has to be between 0 and 999999999'
-    // }
   }),
   computed: {
     ...mapState({
@@ -117,18 +113,6 @@ export default {
         (category) =>
           category.name.toLowerCase().indexOf(this.searchCategory.toLowerCase()) > -1
       )
-    },
-    nameRule () {
-      return v => !v.length ? this.$t('validations.required', { field: this.$t('description') }) : true
-    },
-    requiredRule () {
-      return v => !v.trim() ? this.$t('validations.required', { field: this.$t('amount') }) : true
-    },
-    numberRule () {
-      return v => isNaN(parseFloat(v)) ? this.$t('validations.range', { field: this.$t('amount'), min: 0, max: 999999999 }) : true
-    },
-    rangeRule () {
-      return v => !(v >= 0 && v <= 999999999) ? this.$t('validations.range', { field: this.$t('amount'), min: 0, max: 999999999 }) : true
     }
   },
   methods: {
