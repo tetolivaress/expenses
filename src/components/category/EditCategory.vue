@@ -16,7 +16,7 @@
 
       v-divider
 
-      v-form(@input="formHasError = $event")
+      v-form(@input="formHasError = $event" ref="categoryForm" @submit.prevent="submitCategory({id: category.id, name: category.name})")
         v-text-field(
           v-model="category.name"
           label="Name"
@@ -30,7 +30,6 @@
         v-btn(
           color="primary"
           text
-          @click="updateCategory({id: category.id, name: category.name})"
         )
           | {{ $t('edit') }}
 </template>
@@ -56,7 +55,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions('category', ['updateCategory'])
+    ...mapActions('category', ['updateCategory']),
+    submitCategory (category) {
+      if (this.$refs.categoryForm.validate()) {
+        this.updateCategory
+    }
   }
 }
 </script>
