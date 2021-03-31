@@ -35,20 +35,8 @@
 
       v-divider
 
-      v-form(v-show="!openDatePicker" @input="formHasError = $event")
+      v-form(v-show="!openDatePicker" @input="formHasError = $event" @submit.prevent.click="addInvestment({ description, amount, userId: user.id, date: picker, categoryId: selectedCategory }), newInvestment = false, description = '', amount = ''" ref="investmentForm")
         v-container
-          v-select(
-            :hint="`${filteredCategories.name}, ${filteredCategories.id}`"
-            :items="filteredCategories"
-            item-text="name"
-            item-value="id"
-            :label="$t('category')"
-            solo
-            v-model="selectedCategory"
-          )
-            template(v-slot:append-outer)
-              router-link(to="/category")
-                v-icon mdi-circle-edit-outline
           v-row
             v-col(
               cols="12"
@@ -57,7 +45,7 @@
               v-text-field(
                 v-model="description"
                 :label="$t('description')"
-                required
+                :rules="descriptionRules"
                 solo
               )
 
@@ -68,9 +56,8 @@
               v-text-field(
                 v-model="amount"
                 :label="$t('amount')"
-                required
                 solo
-                :rules="[numberRule]"
+                :rules="numberRules"
                 @update:error="formError = true"
                 @change="formError = false"
               )
@@ -81,15 +68,15 @@
           color="primary"
           text
           v-if="!openDatePicker"
-          @click="addInvestment({ description, amount, userId: user.id, date: picker, categoryId: selectedCategory }), newInvestment = false, description = '', amount = ''"
         )
           | {{ $t('add') }}
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
+import validationTextsMixin from '../mixins/validationTextsMixin'
 export default {
   name: 'AddInvestment',
-
+  mixins: [validationTextsMixin],
   data: () => ({
     formHasError: true,
     selectedCategory: '',
@@ -99,12 +86,7 @@ export default {
     picker: new Date().toISOString().substr(0, 10),
     description: '',
     amount: '',
-    newInvestment: false,
-    numberRule: v => {
-      if (!v.trim()) return true
-      if (!isNaN(parseFloat(v)) && v >= 0 && v <= 999999999) return true
-      return 'Number has to be between 0 and 999999999'
-    }
+    newInvestment: false
   }),
   computed: {
     ...mapState({
@@ -116,6 +98,16 @@ export default {
         (category) =>
           category.name.toLowerCase().indexOf(this.searchCategory.toLowerCase()) > -1
       )
+    },
+    descriptionRules () {
+      return [v => !!v || this.$t('validations.required', { field: this.descriptionText })]
+    },
+    numberRules () {
+      return [
+        v => v.trim() || this.$t('validations.required', { field: this.amountText }),
+        v => !isNaN(parseFloat(v)) || this.$t('validations.range', { field: this.amountText, min: 0, max: 999999999 }),
+        v => (v >= 0 && v <= 999999999) || this.$t('validations.range', { field: this.amountText, min: 0, max: 999999999 })
+      ]
     }
   },
   methods: {
