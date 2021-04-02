@@ -44,10 +44,10 @@
 </template>
 <script>
 import { mapActions, mapState } from 'vuex'
-import validationTextsMixin from '../mixins/validationTextsMixin'
+import validationTextsMixin from '../../mixins/validationTextsMixin'
 export default {
   name: 'AddCategory',
-	mixins: [validationTextsMixin],
+  mixins: [validationTextsMixin],
   data: () => ({
     name: '',
     newCategory: false,

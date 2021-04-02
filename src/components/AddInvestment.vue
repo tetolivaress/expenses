@@ -35,7 +35,12 @@
 
       v-divider
 
-      v-form(v-show="!openDatePicker" @input="formHasError = $event" @submit.prevent.click="addInvestment({ description, amount, userId: user.id, date: picker, categoryId: selectedCategory }), newInvestment = false, description = '', amount = ''" ref="investmentForm")
+      v-form(
+        v-show="!openDatePicker"
+        @input="formHasError = $event"
+        @submit.prevent="addInvestment({ description, amount, userId: user.id, date: picker, categoryId: selectedCategory }), newInvestment = false, description = '', amount = ''"
+        ref="investmentForm"
+      )
         v-container
           v-row
             v-col(
@@ -97,8 +102,10 @@ export default {
   methods: {
     ...mapActions(['investment/addInvestment']),
     async addInvestment (investment) {
-      await this['investment/addInvestment'](investment)
-      this.$store.commit('loading/SET_LOADING', false, { root: true })
+      if(this.$refs.investmentForm.validate()){
+        await this['investment/addInvestment'](investment)
+        this.$store.commit('loading/SET_LOADING', false, { root: true })
+      }
     },
     moment (date) {
       return date ? this.$moment(date) : this.$moment()

@@ -58,7 +58,8 @@ export default {
     ...mapActions('category', ['updateCategory']),
     submitCategory (category) {
       if (this.$refs.categoryForm.validate()) {
-        this.updateCategory
+        this.updateCategory()
+      }
     }
   }
 }
