@@ -59,7 +59,7 @@
                 :label="$t('description')"
                 required
                 solo
-                :rules="[nameRule]"
+                :rules="[descriptionRule]"
               )
 
             v-col(
@@ -71,7 +71,7 @@
                 :label="$t('amount')"
                 required
                 solo
-                :rules="[requiredRule, rangeRule, numberRule]"
+                :rules="[requiredAmountRule, rangeRule, numberRule]"
                 @update:error="formError = true"
                 @change="formError = false"
               )

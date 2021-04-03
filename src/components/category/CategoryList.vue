@@ -9,9 +9,14 @@
       :key="i"
     )
       v-list-item-avatar
+        v-img(
+          :src="category.url"
+          v-if="category.url"
+        )
         v-icon(
           class="grey lighten-1"
           dark
+          v-else
         )
           | mdi-folder
 

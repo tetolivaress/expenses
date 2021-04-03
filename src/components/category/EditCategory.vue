@@ -25,11 +25,19 @@
           solo
         )
 
+      v-file-input(
+        label="Logo"
+        filled
+        prepend-icon="mdi-camera"
+        @change="file = $event"
+      )
+
       v-card-actions(v-if="formHasError")
         v-spacer
         v-btn(
           color="primary"
           text
+          @click="updateCategory({id: category.id, name: category.name, file})"
         )
           | {{ $t('edit') }}
 </template>
@@ -41,7 +49,8 @@ export default {
     return {
       newName: '',
       editCategory: false,
-      formHasError: true
+      formHasError: true,
+      file: null
     }
   },
   computed: {

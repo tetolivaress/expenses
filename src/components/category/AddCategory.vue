@@ -32,13 +32,20 @@
           :rules="[nameRule]"
         )
 
+      v-file-input(
+        label="Logo"
+        filled
+        prepend-icon="mdi-camera"
+        @change="file = $event"
+      )
+
       v-card-actions(v-if="formHasError")
         v-spacer
         v-btn(
           color="primary"
           text
-          @click="addCategory(name)"
-          v-if="!categoryExists"
+          @click="addCategory({name, file})"
+          v-if="!category.categories.filter(category => category.name == name).length"
         )
           | {{ $t('add') }}
 </template>
@@ -51,7 +58,8 @@ export default {
   data: () => ({
     name: '',
     newCategory: false,
-    formHasError: true
+    formHasError: true,
+    file: null
   }),
   computed: {
     ...mapState(['category']),

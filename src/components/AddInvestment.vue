@@ -50,7 +50,7 @@
               v-text-field(
                 v-model="description"
                 :label="$t('description')"
-                :rules="[nameRule]"
+                :rules="[descriptionRule]"
                 solo
               )
 
@@ -62,7 +62,7 @@
                 v-model="amount"
                 :label="$t('amount')"
                 solo
-                :rules="[requiredRule, rangeRule, numberRule]"
+                :rules="[requiredAmountRule, rangeRule, numberRule]"
                 @update:error="formError = true"
                 @change="formError = false"
               )
@@ -102,7 +102,7 @@ export default {
   methods: {
     ...mapActions(['investment/addInvestment']),
     async addInvestment (investment) {
-      if(this.$refs.investmentForm.validate()){
+      if (this.$refs.investmentForm.validate()) {
         await this['investment/addInvestment'](investment)
         this.$store.commit('loading/SET_LOADING', false, { root: true })
       }

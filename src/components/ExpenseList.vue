@@ -42,12 +42,21 @@
 
           v-list-group(
             :value="false"
-            prepend-icon="mdi-account-circle"
             v-for="(category, i) in sortedExpenses"
             :key="i"
           )
             template(v-slot:activator)
-              v-list-item-title
+              v-list-item
+                v-list-item-avatar(@click="selectedExpense = expense, openModal = true")
+                  v-img(
+                    :src="category.url"
+                    v-if="category.url"
+                  )
+                  v-icon(
+                    class="grey lighten-1"
+                    dark
+                    v-else
+                  ) mdi-folder
                 v-badge(
                   color="red"
                   :content="category.expenses.length"
@@ -61,11 +70,6 @@
                 v-if="category.expenses.length"
                 :key="j"
               )
-                v-list-item-avatar(@click="selectedExpense = expense, openModal = true")
-                  v-icon(
-                    class="grey lighten-1"
-                    dark
-                  ) mdi-folder
                 v-list-item-content(@click="selectedExpense = expense, openModal = true")
                   v-list-item-title(v-text="expense.description")
                   v-list-item-subtitle(v-text="expense.amount")
@@ -116,7 +120,7 @@
                   v-model="selectedExpense.description"
                   :counter="10"
                   :label="$t('description')"
-                  required
+                  :rules="[descriptionRule]"
                 )
 
               v-col(
@@ -127,7 +131,7 @@
                   v-model="selectedExpense.amount"
                   :counter="10"
                   :label="$t('amount')"
-                  required
+                  :rules="[requiredAmountRule]"
                 )
 
         v-card-actions
@@ -141,8 +145,10 @@
 </template>
 <script>
 import { mapState, mapActions, mapGetters } from 'vuex'
+import validationTextsMixin from '../mixins/validationTextsMixin'
 
 export default {
+  mixins: [validationTextsMixin],
   data () {
     return {
       selectedExpense: {

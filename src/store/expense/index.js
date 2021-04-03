@@ -31,7 +31,8 @@ export default {
       return rootState.category.categories.map(category => {
         return {
           expenses: expenses.filter(expense => category.id === expense.categoryId && selectedMonth === moment(expense.date).format('MM - YYYY')),
-          category: category.name
+          category: category.name,
+          url: category.url
         }
       })
     },

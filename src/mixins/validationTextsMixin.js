@@ -1,9 +1,12 @@
 const validationTextsMixin = {
   computed: {
     nameRule () {
+      return v => !v.length ? this.$t('validations.required', { field: this.$t('name') }) : true
+    },
+    descriptionRule () {
       return v => !v.length ? this.$t('validations.required', { field: this.$t('description') }) : true
     },
-    requiredRule () {
+    requiredAmountRule () {
       return v => !v.trim() ? this.$t('validations.required', { field: this.$t('amount') }) : true
     },
     numberRule () {
