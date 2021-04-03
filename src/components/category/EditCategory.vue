@@ -24,12 +24,19 @@
           solo
         )
 
+      v-file-input(
+        label="Logo"
+        filled
+        prepend-icon="mdi-camera"
+        @change="file = $event"
+      )
+
       v-card-actions
         v-spacer
         v-btn(
           color="primary"
           text
-          @click="updateCategory({id: category.id, name: category.name})"
+          @click="updateCategory({id: category.id, name: category.name, file})"
         )
           | {{ $t('edit') }}
 </template>
@@ -40,7 +47,8 @@ export default {
   data () {
     return {
       newName: '',
-      editCategory: false
+      editCategory: false,
+      file: null
     }
   },
   watch: {

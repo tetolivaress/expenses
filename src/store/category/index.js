@@ -18,6 +18,14 @@ export default {
     }),
     addCategory: firestoreAction((context, payload) => {
       context.commit('loading/SET_LOADING', true, { root: true })
+
+      if (!payload.file) {
+        return db.collection('categories').add({
+          name: payload.name,
+          userId: context.rootState.user.user.id
+        })
+      }
+
       const refStorage = firebase.storage()
         .ref(`categoriesImages/${payload.file.name}`)
       const task = refStorage.put(payload.file)
@@ -29,7 +37,7 @@ export default {
           .then(url => {
             db.collection('categories').add({
               name: payload.name,
-              url,
+              url: url || '',
               userId: context.rootState.user.user.id
             })
           })
@@ -42,15 +50,31 @@ export default {
         .delete()
         .then(() => commit('loading/SET_LOADING', false, { root: true }))
     }),
-    updateCategory: firestoreAction(({ commit }, { id, name }) => {
-      console.log(id, name)
-      db.collection('categories')
-        .doc(id)
-        .update({ name })
-        .then(() => {
-          console.log('expense updated!')
-        })
-        .catch(error => console.error(error))
+    updateCategory: firestoreAction(({ commit }, payload) => {
+      if (!payload.file) {
+        return db.collection('categories')
+          .doc(payload.id)
+          .update({ name: payload.name })
+          .then(() => {
+            console.log('expense updated!')
+          })
+          .catch(error => console.error(error))
+      }
+
+      const refStorage = firebase.storage()
+        .ref(`categoriesImages/${payload.file.name}`)
+      const task = refStorage.put(payload.file)
+      return task.on(
+        'state_changed',
+        ({ bytesRansferred }) => console.log(bytesRansferred),
+        err => console.log(err),
+        () => task.snapshot.ref.getDownloadURL()
+          .then(url => {
+            db.collection('categories')
+              .doc(payload.id)
+              .update({ name: payload.name, url })
+          })
+      )
     })
   }
 }
