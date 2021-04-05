@@ -38,7 +38,6 @@
       v-form(
         v-show="!openDatePicker"
         @input="formHasError = $event"
-        @submit.prevent="addInvestment({ description, amount, userId: user.id, date: picker, categoryId: selectedCategory }), newInvestment = false, description = '', amount = ''"
         ref="investmentForm"
       )
         v-container
@@ -73,6 +72,7 @@
           color="primary"
           text
           v-if="!openDatePicker"
+          @click="addInvestment({ description, amount, userId: user.id, date: picker, categoryId: selectedCategory }), newInvestment = false, description = '', amount = ''"
         )
           | {{ $t('add') }}
 </template>
