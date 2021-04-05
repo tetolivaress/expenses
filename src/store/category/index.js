@@ -56,7 +56,7 @@ export default {
           .doc(payload.id)
           .update({ name: payload.name })
           .then(() => {
-            console.log('expense updated!')
+            console.log('category updated!')
           })
           .catch(error => console.error(error))
       }

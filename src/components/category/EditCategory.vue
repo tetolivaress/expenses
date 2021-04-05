@@ -16,7 +16,7 @@
 
       v-divider
 
-      v-form(@input="formHasError = $event" ref="categoryForm" @submit.prevent="submitCategory({id: category.id, name: category.name})")
+      v-form(@input="formHasError = $event" ref="categoryForm")
         v-text-field(
           v-model="category.name"
           label="Name"
@@ -25,19 +25,19 @@
           solo
         )
 
-      v-file-input(
-        label="Logo"
-        filled
-        prepend-icon="mdi-camera"
-        @change="file = $event"
-      )
+        v-file-input(
+          label="Logo"
+          filled
+          prepend-icon="mdi-camera"
+          @change="file = $event"
+        )
 
       v-card-actions(v-if="formHasError")
         v-spacer
         v-btn(
           color="primary"
           text
-          @click="updateCategory({id: category.id, name: category.name, file})"
+          @click="updateCategory({id: category.id, name: category.name, file}), editCategory = false"
         )
           | {{ $t('edit') }}
 </template>
