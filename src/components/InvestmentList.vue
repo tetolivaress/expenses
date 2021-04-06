@@ -106,8 +106,7 @@ export default {
       user: ({ user }) => user.user
     }),
     ...mapGetters({
-      sortedInvestments: 'investment/sortedInvestments',
-      spent: 'investment/spent'
+      sortedInvestments: 'investment/sortedInvestments'
     })
   },
   methods: {

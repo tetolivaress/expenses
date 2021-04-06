@@ -28,9 +28,8 @@ export default {
         .toFixed(2)
     },
     sortedInvestments: ({ investments, selectedMonth }, { invested }, rootState) => {
-      return investments
+      return investments.filter(investment => selectedMonth === moment(investment.date).format('MM - YYYY'))
     },
-    withoutCategory: ({ investments }) => investments.filter(investment => !investment.categoryId),
     months: ({ investments }) => [...new Set(investments.map(({ date }) => {
       return { id: moment(date).format('MM - YYYY'), name: moment(date).format('MMMM - YYYY') }
     }))]

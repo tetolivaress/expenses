@@ -19,8 +19,6 @@
         v-toolbar-title(v-if="spent") {{ currentsTotal }}$: {{ $t('spentIn', { month: $moment().format('MMMM') }) }}
         v-toolbar-title(v-else) {{$t('expenses')}}
 
-        v-btn(@click="j") kkkkkk
-
         v-select(
           :hint="`${months.name}, ${months.id}`"
           v-if="months.length"
@@ -125,7 +123,8 @@ export default {
     ...mapGetters({
       spent: 'expense/spent',
       invested: 'investment/invested',
-      months: 'expense/months'
+      expensesMonths: 'expense/months',
+      investmentsMonths: 'investment/months'
     }),
     currentsTotal () {
       switch (this.$route.name) {
@@ -138,13 +137,32 @@ export default {
         case 'investment': {
           return this.invested
         }
+        default: {
+        }
+      }
+    },
+    months () {
+      switch (this.$route.name) {
+        case 'Home': {
+          return this.expensesMonths
+        }
+        case 'income': {
+          return this.investmentsMonths
+        }
+        case 'investment': {
+          return this.investmentsMonths
+        }
+        default: {
+          return this.expensesMonths
+        }
       }
     }
   }),
   methods: {
     ...mapActions(['removeExpense', 'updateExpense']),
     ...mapMutations({
-      CHANGE_MONTH: 'expense/CHANGE_MONTH'
+      CHANGE_EXPENSES_MONTH: 'expense/CHANGE_MONTH',
+      CHANGE_INVESTMENTS_MONTH: 'investment/CHANGE_MONTH'
     }),
     logout () {
       this.$store.dispatch('user/logout')
@@ -157,8 +175,17 @@ export default {
     moment (date) {
       return date ? this.$moment(date) : this.$moment()
     },
-    j () {
-      console.log(this.$route)
+    CHANGE_MONTH (event) {
+      switch (this.$route.name) {
+        case 'Home': {
+          this.CHANGE_EXPENSES_MONTH(event)
+          break
+        }
+        case 'investment': {
+          this.CHANGE_INVESTMENTS_MONTH(event)
+          break
+        }
+      }
     }
   }
 }
