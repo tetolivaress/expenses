@@ -16,8 +16,11 @@
             gradient="to top right, rgba(36,113,163,.65), rgba(33,97,140,.65)"
           )
         v-icon(color="blue" class="mx-4") mdi-minus-circle
-        v-toolbar-title(v-if="spent") {{ spent }}$: {{ $t('spentIn', { month: $moment().format('MMMM') }) }}
+        v-toolbar-title(v-if="spent") {{ currentsTotal }}$: {{ $t('spentIn', { month: $moment().format('MMMM') }) }}
         v-toolbar-title(v-else) {{$t('expenses')}}
+
+        v-btn(@click="j") kkkkkk
+
         v-select(
           :hint="`${months.name}, ${months.id}`"
           v-if="months.length"
@@ -121,8 +124,22 @@ export default {
     ...mapState(['expenses', 'loading', 'user']),
     ...mapGetters({
       spent: 'expense/spent',
+      invested: 'investment/invested',
       months: 'expense/months'
-    })
+    }),
+    currentsTotal () {
+      switch (this.$route.name) {
+        case 'Home': {
+          return this.spent
+        }
+        case 'income': {
+          return this.invested
+        }
+        case 'investment': {
+          return this.invested
+        }
+      }
+    }
   }),
   methods: {
     ...mapActions(['removeExpense', 'updateExpense']),
@@ -139,6 +156,9 @@ export default {
     },
     moment (date) {
       return date ? this.$moment(date) : this.$moment()
+    },
+    j () {
+      console.log(this.$route)
     }
   }
 }
