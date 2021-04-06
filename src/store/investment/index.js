@@ -31,7 +31,7 @@ export default {
       return investments
     },
     withoutCategory: ({ investments }) => investments.filter(investment => !investment.categoryId),
-    months: ({ investment }) => [...new Set(investment.map(({ date }) => {
+    months: ({ investments }) => [...new Set(investments.map(({ date }) => {
       return { id: moment(date).format('MM - YYYY'), name: moment(date).format('MMMM - YYYY') }
     }))]
   },

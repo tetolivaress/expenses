@@ -103,23 +103,15 @@ export default {
   },
   computed: {
     ...mapState({
-      user: ({ user }) => user.user,
-      categories: ({ category }) => category.categories
+      user: ({ user }) => user.user
     }),
     ...mapGetters({
       sortedInvestments: 'investment/sortedInvestments',
-      withoutCategory: 'investment/withoutCategory',
       spent: 'investment/spent'
     })
   },
   methods: {
     ...mapActions('investment', ['removeInvestment', 'updateInvestment']),
-    spentCategory (investment) {
-      return investment
-        .map(investment => Number(investment.amount))
-        .reduce((acc, current) => acc + current, 0)
-        .toFixed(2)
-    },
     moment (date) {
       return date ? this.$moment(date) : this.$moment()
     }
@@ -127,7 +119,6 @@ export default {
   async created () {
     this.$store.commit('loading/SET_LOADING', true, { root: true })
     try {
-      await this.$store.dispatch('category/bindCategories')
       await this.$store.dispatch('investment/bindInvestments')
       this.$store.commit('loading/SET_LOADING', false, { root: true })
     } catch (error) {
